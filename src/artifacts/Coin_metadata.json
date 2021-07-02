@@ -8,9 +8,19 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_contractAddress",
-						"type": "address"
+						"internalType": "string",
+						"name": "name_",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol_",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "chainId_",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -250,19 +260,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "conversionFactor",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
@@ -342,19 +339,6 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "oracle",
-				"outputs": [
-					{
-						"internalType": "contract OracleRelayer",
-						"name": "",
-						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -445,19 +429,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "raiContractAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -466,55 +437,6 @@
 					}
 				],
 				"name": "removeAuthorization",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "returnContractAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "returnDepositedAmt",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "swapRai",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -600,13 +522,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "updateBalance",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "version",
 				"outputs": [
 					{
@@ -616,19 +531,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
-				"name": "withdrawRai",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -659,7 +561,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/WRAI.sol": "WRAI"
+			"src/Coin.sol": "Coin"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -673,25 +575,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"/src/Coin.sol": {
+		"src/Coin.sol": {
 			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
 			"urls": [
 				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
-			]
-		},
-		"/src/OracleRelayer.sol": {
-			"keccak256": "0x452132b1edab876aa92e72f240828d4115a82669fe61c27775233c852d715bd8",
-			"urls": [
-				"bzz-raw://d9852db149a9fbf4fc98b55d5a8d69b0c63949076eff7ebcc997b2bcb1c2df9f",
-				"dweb:/ipfs/QmUuiXXQLLKfLoE2wkNWvHwTRt3T1VcEg5NAWtjGdoMyzF"
-			]
-		},
-		"src/WRAI.sol": {
-			"keccak256": "0xb509067d7f1192678c144b634316d3416ee1d4762b102ad09a49573666c48a34",
-			"urls": [
-				"bzz-raw://6814562fee73cadd9e1b39fd794ea57fc5288ef0acee31df6a9c7f9f5a327841",
-				"dweb:/ipfs/QmRJ6kofroqPVu1y9Ku8CpLnaKQvhPJGb81cbxpUAuup1E"
 			]
 		}
 	},
