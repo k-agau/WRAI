@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.6+commit.11564f7e"
+		"version": "0.6.7+commit.b8d736ae"
 	},
 	"language": "Solidity",
 	"output": {
@@ -26,26 +26,22 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
 		"devdoc": {
-			"kind": "dev",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		},
 		"userdoc": {
-			"kind": "user",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
 			"contracts/TmpOracleRelayer.sol": "TmpOracleRelayer"
 		},
-		"evmVersion": "berlin",
+		"evmVersion": "istanbul",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -58,10 +54,10 @@
 	},
 	"sources": {
 		"contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0x549d7f9d337207067347894c1159b00e0974020f2a7e8008b756312b035c53ac",
+			"keccak256": "0x74114992c2957a8a3668ac86a52a0fde18afda4cee5e4eb4aa1e865cad1b08e9",
 			"urls": [
-				"bzz-raw://e8e8000e9bce7dfffaf11a60e6f314355923e28d61c1ed07148f8b9ee9efbdf9",
-				"dweb:/ipfs/QmU9J5Y4zXKD5zMH2w4DoUEJJdY1iTJZ1dvqvwnC3JnGWd"
+				"bzz-raw://b4832938f14c800adeaef2628ea92f9b360054cbe894312cf60285171337cc67",
+				"dweb:/ipfs/QmaERDKeiNS8zAmuLwx1StNXS8vdNFkyvp8Zrw9RzKeQXP"
 			]
 		}
 	},

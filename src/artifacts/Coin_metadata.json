@@ -576,10 +576,10 @@
 	},
 	"sources": {
 		"src/Coin.sol": {
-			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
+			"keccak256": "0x49da3e9d625fc5867f234839d13a2c6506d509eab262b3fdbce4c077254733c3",
 			"urls": [
-				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
-				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
+				"bzz-raw://9f588b96fdef69cc1a8daa8cbdef37e95a5d3452bbd49b1993fa5f2723703571",
+				"dweb:/ipfs/QmS9oyTag1quUPCAHx5tSEctamAbKotCkSZo9YVmuesvoh"
 			]
 		}
 	},

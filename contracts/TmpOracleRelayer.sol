@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity 0.6.7;
 
 contract TmpOracleRelayer {
     
@@ -8,7 +8,7 @@ contract TmpOracleRelayer {
         _redemptionPrice = tmpPrice;
     }
     
-    function redemptionPrice() public returns (uint256) {
+    function redemptionPrice() public view returns (uint256) {
         return _redemptionPrice;
     }
     

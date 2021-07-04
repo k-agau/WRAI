@@ -9,8 +9,28 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_contractAddress",
+						"name": "_underlyingToken",
 						"type": "address"
+					},
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "_tmpOracle",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_chainId",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -60,6 +80,25 @@
 					{
 						"indexed": false,
 						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountInRai",
+						"type": "uint256"
+					}
+				],
+				"name": "Deposit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
 						"name": "account",
 						"type": "address"
 					}
@@ -90,6 +129,25 @@
 					}
 				],
 				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountInRai",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdraw",
 				"type": "event"
 			},
 			{
@@ -202,6 +260,25 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					}
+				],
+				"name": "balance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -278,6 +355,30 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountInRai",
+						"type": "uint256"
+					}
+				],
+				"name": "depositRai",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "usr",
 						"type": "address"
 					},
@@ -342,19 +443,6 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "oracle",
-				"outputs": [
-					{
-						"internalType": "contract OracleRelayer",
-						"name": "",
-						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -446,10 +534,10 @@
 			},
 			{
 				"inputs": [],
-				"name": "raiContractAddress",
+				"name": "rai",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "contract Coin",
 						"name": "",
 						"type": "address"
 					}
@@ -472,61 +560,25 @@
 			},
 			{
 				"inputs": [],
-				"name": "returnContractAddress",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "returnDepositedAmt",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "token",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "swapRai",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "symbol",
 				"outputs": [
 					{
 						"internalType": "string",
 						"name": "",
 						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tmpOracle",
+				"outputs": [
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -600,7 +652,20 @@
 			},
 			{
 				"inputs": [],
-				"name": "updateBalance",
+				"name": "underlyingToken",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "updateRedemptionPrice",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -621,8 +686,13 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
-						"name": "_amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -639,10 +709,16 @@
 						"account": "Account to add auth to"
 					}
 				},
+				"constructor": {
+					"details": "A constructor that takes in the address of the underlying token and an Oracle that will also create a new Coin"
+				},
 				"removeAuthorization(address)": {
 					"params": {
 						"account": "Account to remove auth from"
 					}
+				},
+				"updateRedemptionPrice()": {
+					"details": "Uses the Oracle to update the redemption price"
 				}
 			}
 		},
@@ -650,6 +726,9 @@
 			"methods": {
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
+				},
+				"depositRai(address,uint256)": {
+					"notice": "Allows users to deposit Rai in exchange for the wrapped Token, which will be minted into their accounts upon confirmation of the deposit in a 1:1 ratio.*"
 				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
@@ -673,6 +752,13 @@
 		"remappings": []
 	},
 	"sources": {
+		"/contracts/TmpOracleRelayer.sol": {
+			"keccak256": "0x74114992c2957a8a3668ac86a52a0fde18afda4cee5e4eb4aa1e865cad1b08e9",
+			"urls": [
+				"bzz-raw://b4832938f14c800adeaef2628ea92f9b360054cbe894312cf60285171337cc67",
+				"dweb:/ipfs/QmaERDKeiNS8zAmuLwx1StNXS8vdNFkyvp8Zrw9RzKeQXP"
+			]
+		},
 		"/src/Coin.sol": {
 			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
 			"urls": [
@@ -680,18 +766,11 @@
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
 			]
 		},
-		"/src/OracleRelayer.sol": {
-			"keccak256": "0x452132b1edab876aa92e72f240828d4115a82669fe61c27775233c852d715bd8",
-			"urls": [
-				"bzz-raw://d9852db149a9fbf4fc98b55d5a8d69b0c63949076eff7ebcc997b2bcb1c2df9f",
-				"dweb:/ipfs/QmUuiXXQLLKfLoE2wkNWvHwTRt3T1VcEg5NAWtjGdoMyzF"
-			]
-		},
 		"src/WRAI.sol": {
-			"keccak256": "0xb509067d7f1192678c144b634316d3416ee1d4762b102ad09a49573666c48a34",
+			"keccak256": "0xe530af7f713bd65ebc19ac6961a4f99694f23f3f5a071f75a9b34a6ce1c9a51a",
 			"urls": [
-				"bzz-raw://6814562fee73cadd9e1b39fd794ea57fc5288ef0acee31df6a9c7f9f5a327841",
-				"dweb:/ipfs/QmRJ6kofroqPVu1y9Ku8CpLnaKQvhPJGb81cbxpUAuup1E"
+				"bzz-raw://25b36089448af1976e4a6439728692cf8c597284886ea7d741ac8963af6c765c",
+				"dweb:/ipfs/QmQGP4SpM3eT9wEmG9sfHqHqGhrR2yqG4WdJhUcFLVZwLh"
 			]
 		}
 	},
