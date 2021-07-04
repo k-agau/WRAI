@@ -1,9 +1,12 @@
-pragma solidity>=0.6.7 <0.8.0;
+pragma solidity ^0.8.0;
 
 import "/src/Coin.sol";
 import "/src/OracleRelayer.sol";
 
 
+
+
+/*
 contract WRAI is Coin {
     address public raiContractAddress;
     OracleRelayer public oracle = new OracleRelayer(raiContractAddress);
@@ -68,3 +71,4 @@ contract WRAI is Coin {
         
     }
 }
+*/
