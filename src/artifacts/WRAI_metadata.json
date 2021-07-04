@@ -86,7 +86,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountInRai",
+						"name": "amountInUnderlying",
 						"type": "uint256"
 					}
 				],
@@ -143,7 +143,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountInRai",
+						"name": "amountInUnderlying",
 						"type": "uint256"
 					}
 				],
@@ -360,11 +360,11 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amountInRai",
+						"name": "amountInUnderlying",
 						"type": "uint256"
 					}
 				],
-				"name": "depositRai",
+				"name": "deposit",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -533,19 +533,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "rai",
-				"outputs": [
-					{
-						"internalType": "contract Coin",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -577,6 +564,19 @@
 				"outputs": [
 					{
 						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "token",
+				"outputs": [
+					{
+						"internalType": "contract Coin",
 						"name": "",
 						"type": "address"
 					}
@@ -696,7 +696,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "withdrawRai",
+				"name": "withdraw",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -708,9 +708,6 @@
 					"params": {
 						"account": "Account to add auth to"
 					}
-				},
-				"constructor": {
-					"details": "A constructor that takes in the address of the underlying token and an Oracle that will also create a new Coin"
 				},
 				"removeAuthorization(address)": {
 					"params": {
@@ -727,7 +724,7 @@
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
 				},
-				"depositRai(address,uint256)": {
+				"deposit(address,uint256)": {
 					"notice": "Allows users to deposit Rai in exchange for the wrapped Token, which will be minted into their accounts upon confirmation of the deposit in a 1:1 ratio.*"
 				},
 				"removeAuthorization(address)": {
@@ -767,10 +764,10 @@
 			]
 		},
 		"src/WRAI.sol": {
-			"keccak256": "0xe530af7f713bd65ebc19ac6961a4f99694f23f3f5a071f75a9b34a6ce1c9a51a",
+			"keccak256": "0x872aa3cbdd050048baea667f6fd3909ff14df5dccbb06ccecc3bffc0d7bdc373",
 			"urls": [
-				"bzz-raw://25b36089448af1976e4a6439728692cf8c597284886ea7d741ac8963af6c765c",
-				"dweb:/ipfs/QmQGP4SpM3eT9wEmG9sfHqHqGhrR2yqG4WdJhUcFLVZwLh"
+				"bzz-raw://94b779a8f9ddedeb42d4170f99ac7733ceea452307ef32d5e69320f4d2aa8339",
+				"dweb:/ipfs/QmdUmNbLPTSd2jKy7jNmxSnB5DHRHrxvVzRMVtmrfFnaDd"
 			]
 		}
 	},

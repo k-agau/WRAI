@@ -5,27 +5,26 @@ import "/contracts/TmpOracleRelayer.sol";
 
 contract WRAI is Coin {
     
-    /// @dev The rate of 1 RAI to 1 Wrapped RAI
+    // @dev The rate of 1 RAI to 1 Wrapped RAI
     uint public conversionFactor;
     
-    /// @dev The token address for Rai
+    // @dev The token address for Rai
     address public underlyingToken;
     
-    /// @dev The token form of the address for the underlyingToken
-    Coin public immutable rai;
+    // @dev The token form of the address for the underlying token address
+    Coin public immutable token;
     
-    /// @dev A temporary Oracle being used for testing convenience
+    // @dev A temporary Oracle being used for testing convenience
     TmpOracleRelayer public immutable tmpOracle;
     
-    /// @dev Events for after tokens are deposited and withdrawn
-    event Deposit(address src, uint amountInRai);
-    event Withdraw(address src, uint amountInRai);
+    // @dev Events for after tokens are deposited and withdrawn
+    event Deposit(address src, uint amountInUnderlying);
+    event Withdraw(address src, uint amountInUnderlying);
     
-    /// @dev A constructor that takes in the address of the underlying token and an Oracle
-    /// that will also create a new Coin
+    // @dev A constructor that takes in the address of the underlying token and an Oracle that will also create a new Coin
     constructor(address _underlyingToken, TmpOracleRelayer _tmpOracle, string memory name, string memory symbol, uint _chainId) public Coin(name, symbol, _chainId) {
         underlyingToken = _underlyingToken;
-        rai = Coin(underlyingToken);
+        token = Coin(underlyingToken);
         tmpOracle = _tmpOracle;
     }
     
@@ -38,18 +37,18 @@ contract WRAI is Coin {
     * Allows users to deposit Rai in exchange for the wrapped Token, which will be
     * minted into their accounts upon confirmation of the deposit in a 1:1 ratio.
      **/
-    function depositRai(address src, uint amountInRai) public returns (bool) {
-        uint balance = rai.balanceOf(src);
-        require(amountInRai <= balance);
+    function deposit(address src, uint amountInUnderlying) public returns (bool) {
+        uint balance = token.balanceOf(src);
+        require(amountInUnderlying <= balance);
         
-        rai.transferFrom(src, address(this), amountInRai);
-        _mint(src, amountInRai);
-        emit Deposit(src, amountInRai);
+        token.transferFrom(src, address(this), amountInUnderlying);
+        _mint(src, amountInUnderlying);
+        emit Deposit(src, amountInUnderlying);
         
         return true;
     }
     
-    function withdrawRai(address src, uint wrappedAmount) public {
+    function withdraw(address src, uint wrappedAmount) public {
         uint balance = this.balanceOf(src);
         require(wrappedAmount <= balance);
         
@@ -59,15 +58,15 @@ contract WRAI is Coin {
         
         this.burn(src, wrappedAmount);
         
-        rai.transferFrom(address(this), msg.sender, unwrappedAmount);
+        token.transferFrom(address(this), msg.sender, unwrappedAmount);
         
         emit Withdraw(src, unwrappedAmount);
     }
     
     function balance(address src) public returns(uint256) {
         updateRedemptionPrice();
-        uint updatedAmount = this.balanceOf(src) * conversionFactor;
-        return updatedAmount;
+        uint wrappedAmount = this.balanceOf(src) * conversionFactor;
+        return wrappedAmount;
     }
     
     function _mint(address src, uint amt) private {
