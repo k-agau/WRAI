@@ -3,9 +3,9 @@ pragma solidity 0.6.7;
 import "/src/Coin.sol";
 import "/contracts/TmpOracleRelayer.sol";
 
-contract WRAI is Coin {
+contract WrappedToken is Coin {
     
-    // @dev The rate of 1 RAI to 1 Wrapped RAI
+    // @dev The rate of 1 RAI to 1 Wrapped RAI and the divisor
     uint public conversionFactor;
     uint public constant divisor = 10 ** 27;
 
@@ -35,6 +35,7 @@ contract WRAI is Coin {
     * minted into their accounts upon confirmation of the deposit in a 1:1 ratio.
      **/
     function deposit(address src, uint amountInUnderlying) public returns (bool) {
+        require(amountInUnderlying > 0);
         uint balance = underlyingToken.balanceOf(src);
         require(amountInUnderlying <= balance);
         
@@ -45,6 +46,9 @@ contract WRAI is Coin {
         return true;
     }
     
+    /**
+     * Allows users to withdraw their underlying token from the contract and exchange the wrapped token at the current rate
+     **/
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
         require(src == msg.sender);
         uint balance = this.balanceOf(src);
@@ -63,12 +67,18 @@ contract WRAI is Coin {
         return true;
     }
     
+    /**
+     * Returns the balance of the wrapped token by converting the price of 1 underlying token to x amount of wrapped, each of which is equivalent to 1 USD
+     **/
     function balance(address src) public returns(uint256) {
         updateRedemptionPrice();
         uint wrappedAmount = this.balanceOf(src) * conversionFactor / divisor;
         return wrappedAmount;
     }
     
+    /**
+     * A mint function allowing for rebasing without requiring reauthorization
+     **/ 
     function _mint(address src, uint amt) private {
         balanceOf[src] = addition(balanceOf[src], amt);
         totalSupply = addition(totalSupply, amt);

@@ -730,18 +730,24 @@
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
 				},
+				"balance(address)": {
+					"notice": "Returns the balance of the wrapped token by converting the price of 1 underlying token to x amount of wrapped, each of which is equivalent to 1 USD*"
+				},
 				"deposit(address,uint256)": {
 					"notice": "Allows users to deposit Rai in exchange for the wrapped Token, which will be minted into their accounts upon confirmation of the deposit in a 1:1 ratio.*"
 				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
+				},
+				"withdraw(address,uint256)": {
+					"notice": "Allows users to withdraw their underlying token from the contract and exchange the wrapped token at the current rate*"
 				}
 			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/WRAI.sol": "WRAI"
+			"src/WrappedToken.sol": "WrappedToken"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -769,11 +775,11 @@
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
 			]
 		},
-		"src/WRAI.sol": {
-			"keccak256": "0x8a3252e7ab3562c6f3019deea7885d3b27a047f274b1d4587a5c680f5a30112b",
+		"src/WrappedToken.sol": {
+			"keccak256": "0x1d1f9bb1d932419d577a00769925673a444e8f932ab1ab8a6eed2dc59aa6237f",
 			"urls": [
-				"bzz-raw://67007a09a5796c55956a0ae1a3117efab58954de6e2e18c02ee2f68a6028e81d",
-				"dweb:/ipfs/QmTHtGwNDtwaCK28zPiR43qUgp6CUu86BFYQU3Y3wVGSfQ"
+				"bzz-raw://1aebed486caa1629b3902156f1eded77a2015b0c6c7b6b3964aa91f0e2b27370",
+				"dweb:/ipfs/Qme1iQtECoGccFmCL1BFERtTd6WBtqiLo8fyHVENJcyx7V"
 			]
 		}
 	},

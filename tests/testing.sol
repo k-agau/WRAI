@@ -1,12 +1,12 @@
 pragma solidity 0.6.7;
 
 import "https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol";
-import "/src/WRAI.sol";
+import "/src/WrappedToken.sol";
 
 contract TokenUser {
-    WRAI public token;
+    WrappedToken public token;
     
-    constructor(WRAI _token) public {
+    constructor(WrappedToken _token) public {
         token = _token;
     }
     
@@ -45,13 +45,11 @@ contract TokenUser {
     
     TmpOracleRelayer oracleRelayer;
 
-    Coin    underlyingToken;
-    WRAI    wrappedToken;
-    Hevm    hevm;
+    Coin            underlyingToken;
+    WrappedToken    wrappedToken;
+    Hevm            hevm;
 
     address user1;
-    address user2;
-    address user3;
     address self;
 
     uint amount = 2;
@@ -84,8 +82,6 @@ contract TokenUser {
         underlyingToken = createToken();
         
         user1 = address(new TokenUser(wrappedToken));
-        user2 = address(new TokenUser(wrappedToken));
-        user3 = address(new TokenUser(wrappedToken));
 
         underlyingToken.mint(address(this), initialBalanceThis);
         underlyingToken.mint(cal, initialBalanceCal);
@@ -97,8 +93,8 @@ contract TokenUser {
         return new Coin("Rai", "RAI", 99);
     }
     
-    function createWrappedToken() internal returns (WRAI) {
-        return new WRAI(underlyingToken, oracleRelayer, "Wrapped Rai", "WRAI", 99);
+    function createWrappedToken() internal returns (WrappedToken) {
+        return new WrappedToken(underlyingToken, oracleRelayer, "Wrapped Rai", "WRAI", 99);
     }
     
     function testSetup() public {
@@ -117,26 +113,26 @@ contract TokenUser {
     function testDeposit() public {
         uint sentAmount = 250;
         uint totalSupplyOfWrapped = wrappedToken.totalSupply();
-        underlyingToken.transfer(user2, sentAmount);
-        assertEq(underlyingToken.balanceOf(user2), sentAmount);
+        underlyingToken.transfer(user1, sentAmount);
+        assertEq(underlyingToken.balanceOf(user1), sentAmount);
         assertEq(underlyingToken.balanceOf(self), initialBalanceThis - sentAmount);
-        wrappedToken.deposit(user2, sentAmount);
-        assertEq(wrappedToken.balanceOf(user2), sentAmount);
-        assertEq(underlyingToken.balanceOf(user2), 0);
+        wrappedToken.deposit(user1, sentAmount);
+        assertEq(wrappedToken.balanceOf(user1), sentAmount);
+        assertEq(underlyingToken.balanceOf(user1), 0);
         assertEq(wrappedToken.totalSupply(), totalSupplyOfWrapped + sentAmount);
     }
     
     function testWithdraw() public {
         uint depositAmount = 250;
-        wrappedToken.withdraw(user2, depositAmount);
-        assertEq(wrappedToken.balanceOf(user2), 0);
+        wrappedToken.withdraw(user1, depositAmount);
+        assertEq(wrappedToken.balanceOf(user1), 0);
     }
     
     function testBalance() public {
         uint depositAmount = 250;
         uint redemptionPrice = wrappedToken.conversionFactor();
-        wrappedToken.deposit(user2, depositAmount);
-        assertEq(wrappedToken.balance(user2), depositAmount * redemptionPrice / rad(1));
+        wrappedToken.deposit(user1, depositAmount);
+        assertEq(wrappedToken.balance(user1), depositAmount * redemptionPrice / rad(1));
     }
     
  }
