@@ -2,7 +2,7 @@ pragma solidity 0.6.7;
 
 contract TmpOracleRelayer {
     
-    uint _redemptionPrice;
+    uint public _redemptionPrice;
     
     constructor(uint tmpPrice) public {
         _redemptionPrice = tmpPrice;

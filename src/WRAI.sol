@@ -48,7 +48,7 @@ contract WRAI is Coin {
         return true;
     }
     
-    function withdraw(address src, uint wrappedAmount) public {
+    function withdraw(address src, uint wrappedAmount) public returns (bool) {
         uint balance = this.balanceOf(src);
         require(wrappedAmount <= balance);
         
@@ -61,6 +61,8 @@ contract WRAI is Coin {
         token.transferFrom(address(this), msg.sender, unwrappedAmount);
         
         emit Withdraw(src, unwrappedAmount);
+        
+        return true;
     }
     
     function balance(address src) public returns(uint256) {

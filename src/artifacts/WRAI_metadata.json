@@ -750,10 +750,10 @@
 	},
 	"sources": {
 		"/contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0x74114992c2957a8a3668ac86a52a0fde18afda4cee5e4eb4aa1e865cad1b08e9",
+			"keccak256": "0xcb2ebf34f6077f641725e8fb68eb72e58ac8cfd1a1753bac72ccf36fc54f6ffc",
 			"urls": [
-				"bzz-raw://b4832938f14c800adeaef2628ea92f9b360054cbe894312cf60285171337cc67",
-				"dweb:/ipfs/QmaERDKeiNS8zAmuLwx1StNXS8vdNFkyvp8Zrw9RzKeQXP"
+				"bzz-raw://a4ad87de1e801bd1f20f8754044b44034ed7e13a1ab5fd5d75940f2171a94cca",
+				"dweb:/ipfs/QmP3MEdMfHdAA2Tds3s7fSQwBTwxjYHzHtiViHbsrjTFYE"
 			]
 		},
 		"/src/Coin.sol": {
@@ -764,10 +764,10 @@
 			]
 		},
 		"src/WRAI.sol": {
-			"keccak256": "0x872aa3cbdd050048baea667f6fd3909ff14df5dccbb06ccecc3bffc0d7bdc373",
+			"keccak256": "0x3290877055ac7200975c711727c9e9f5888f27c99e0a6b4e951c6008f9312cf3",
 			"urls": [
-				"bzz-raw://94b779a8f9ddedeb42d4170f99ac7733ceea452307ef32d5e69320f4d2aa8339",
-				"dweb:/ipfs/QmdUmNbLPTSd2jKy7jNmxSnB5DHRHrxvVzRMVtmrfFnaDd"
+				"bzz-raw://5b6b2303c94926f37f07b0d9b2bb29485a82f168138585dcead672e95a34b099",
+				"dweb:/ipfs/QmWGzQGNGoiRonTAhWu8kPRF72UdupfYEPnu1F6fPgBmhA"
 			]
 		}
 	},
