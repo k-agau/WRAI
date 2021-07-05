@@ -6,8 +6,337 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "log",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "log_address",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "log_bytes",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "log_bytes32",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"name": "log_int",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "val",
+						"type": "address"
+					}
+				],
+				"name": "log_named_address",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "val",
+						"type": "bytes"
+					}
+				],
+				"name": "log_named_bytes",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "val",
+						"type": "bytes32"
+					}
+				],
+				"name": "log_named_bytes32",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "val",
+						"type": "int256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "decimals",
+						"type": "uint256"
+					}
+				],
+				"name": "log_named_decimal_int",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "val",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "decimals",
+						"type": "uint256"
+					}
+				],
+				"name": "log_named_decimal_uint",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "val",
+						"type": "int256"
+					}
+				],
+				"name": "log_named_int",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "val",
+						"type": "string"
+					}
+				],
+				"name": "log_named_string",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "key",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "val",
+						"type": "uint256"
+					}
+				],
+				"name": "log_named_uint",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "log_string",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "log_uint",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "logs",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "IS_TEST",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "failed",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "setUp",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testDeposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testSetup",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testSetupPrecondition",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testWithdraw",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -51,24 +380,24 @@
 			]
 		},
 		"/src/WRAI.sol": {
-			"keccak256": "0x174bd58a5aeddd44c24a1921f75c183179ef499ea883842509ac782ee57d3f2e",
+			"keccak256": "0x8a3252e7ab3562c6f3019deea7885d3b27a047f274b1d4587a5c680f5a30112b",
 			"urls": [
-				"bzz-raw://daecea4eeb01980e2f93fbf9675c8df82d594df35b2460edb9011822bba989b3",
-				"dweb:/ipfs/QmfSkXiMvb2eE2JRtvdaA6HFsCm99yEiD52dPmFfsjfJQV"
+				"bzz-raw://67007a09a5796c55956a0ae1a3117efab58954de6e2e18c02ee2f68a6028e81d",
+				"dweb:/ipfs/QmTHtGwNDtwaCK28zPiR43qUgp6CUu86BFYQU3Y3wVGSfQ"
 			]
 		},
-		"remix_tests.sol": {
-			"keccak256": "0xe2783cdc204cba8c72494119339f1d90f9022b15d6c718c668b7f097d8e29787",
+		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
+			"keccak256": "0xff9d5f742cefc0bb0d4b13b006c4d032bb24a5c1f7ce7031823230d0267dc0cd",
 			"urls": [
-				"bzz-raw://bb6a22e64c7f16bcaab63b1c1a1b269d5be8a6d37bdd9dec1718477ab916b18e",
-				"dweb:/ipfs/QmdkW1tT5iadBvaHMCoskhDGZKnfdg8o1D9CcoQYtdJet7"
+				"bzz-raw://ace1c4590fabf3063db1662746726d3d2c7d39a0df03267f3a9bd1e12100594f",
+				"dweb:/ipfs/QmduV224JB2TXqrFcJbjyy4bsH5PY3jFHzYV8bSJSUzceL"
 			]
 		},
 		"tests/testing.sol": {
-			"keccak256": "0x46e442676cfb1a06c37b9ff4fabd8f5ad357e72491995eda4bdc5478e294f248",
+			"keccak256": "0x65c747cefc8fd20d0500a2a988c0d3d8faf94981be4cee66683cb1300ee6d9fa",
 			"urls": [
-				"bzz-raw://cdd282e8397a517b78d78d02dd8948488c66b880c33f196d2c1ad16cea2b4eec",
-				"dweb:/ipfs/QmS95QVb3D6Vvt5yB3Dzmw52jdmbRmfUvDk5DbjvYgAFpy"
+				"bzz-raw://e57aedf0f3359c7ce1aaacfeb979abb2213b43a8f9fc47b364e84ebf431756cc",
+				"dweb:/ipfs/QmUcwqXcv7fch4jFYENAUD9LrnZbfuhqgPf4BXZwy3xaNy"
 			]
 		}
 	},

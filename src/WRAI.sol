@@ -7,12 +7,10 @@ contract WRAI is Coin {
     
     // @dev The rate of 1 RAI to 1 Wrapped RAI
     uint public conversionFactor;
-    
-    // @dev The token address for Rai
-    address public underlyingToken;
-    
-    // @dev The token form of the address for the underlying token address
-    Coin public immutable token;
+    uint public constant divisor = 10 ** 27;
+
+    // @dev The token of the address for the underlying token
+    Coin public immutable underlyingToken;
     
     // @dev A temporary Oracle being used for testing convenience
     TmpOracleRelayer public immutable tmpOracle;
@@ -22,9 +20,8 @@ contract WRAI is Coin {
     event Withdraw(address src, uint amountInUnderlying);
     
     // @dev A constructor that takes in the address of the underlying token and an Oracle that will also create a new Coin
-    constructor(address _underlyingToken, TmpOracleRelayer _tmpOracle, string memory name, string memory symbol, uint _chainId) public Coin(name, symbol, _chainId) {
+    constructor(Coin _underlyingToken, TmpOracleRelayer _tmpOracle, string memory name, string memory symbol, uint _chainId) public Coin(name, symbol, _chainId) {
         underlyingToken = _underlyingToken;
-        token = Coin(underlyingToken);
         tmpOracle = _tmpOracle;
     }
     
@@ -38,10 +35,10 @@ contract WRAI is Coin {
     * minted into their accounts upon confirmation of the deposit in a 1:1 ratio.
      **/
     function deposit(address src, uint amountInUnderlying) public returns (bool) {
-        uint balance = token.balanceOf(src);
+        uint balance = underlyingToken.balanceOf(src);
         require(amountInUnderlying <= balance);
         
-        token.transferFrom(src, address(this), amountInUnderlying);
+        underlyingToken.transferFrom(src, address(this), amountInUnderlying);
         _mint(src, amountInUnderlying);
         emit Deposit(src, amountInUnderlying);
         
@@ -49,6 +46,7 @@ contract WRAI is Coin {
     }
     
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
+        require(src == msg.sender);
         uint balance = this.balanceOf(src);
         require(wrappedAmount <= balance);
         
@@ -58,7 +56,7 @@ contract WRAI is Coin {
         
         this.burn(src, wrappedAmount);
         
-        token.transferFrom(address(this), msg.sender, unwrappedAmount);
+        underlyingToken.transferFrom(address(this), msg.sender, unwrappedAmount);
         
         emit Withdraw(src, unwrappedAmount);
         
@@ -67,7 +65,7 @@ contract WRAI is Coin {
     
     function balance(address src) public returns(uint256) {
         updateRedemptionPrice();
-        uint wrappedAmount = this.balanceOf(src) * conversionFactor;
+        uint wrappedAmount = this.balanceOf(src) * conversionFactor / divisor;
         return wrappedAmount;
     }
     

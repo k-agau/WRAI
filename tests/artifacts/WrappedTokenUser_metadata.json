@@ -143,7 +143,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"tests/testing.sol": "TokenUser"
+			"tests/testing.sol": "WrappedTokenUser"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -172,10 +172,10 @@
 			]
 		},
 		"/src/WRAI.sol": {
-			"keccak256": "0x8a3252e7ab3562c6f3019deea7885d3b27a047f274b1d4587a5c680f5a30112b",
+			"keccak256": "0x174bd58a5aeddd44c24a1921f75c183179ef499ea883842509ac782ee57d3f2e",
 			"urls": [
-				"bzz-raw://67007a09a5796c55956a0ae1a3117efab58954de6e2e18c02ee2f68a6028e81d",
-				"dweb:/ipfs/QmTHtGwNDtwaCK28zPiR43qUgp6CUu86BFYQU3Y3wVGSfQ"
+				"bzz-raw://daecea4eeb01980e2f93fbf9675c8df82d594df35b2460edb9011822bba989b3",
+				"dweb:/ipfs/QmfSkXiMvb2eE2JRtvdaA6HFsCm99yEiD52dPmFfsjfJQV"
 			]
 		},
 		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
@@ -186,10 +186,10 @@
 			]
 		},
 		"tests/testing.sol": {
-			"keccak256": "0x65c747cefc8fd20d0500a2a988c0d3d8faf94981be4cee66683cb1300ee6d9fa",
+			"keccak256": "0xbff805fa58d129ad5e4f634c1130333f86e5c1fc28d19cba5acd0bea918146b3",
 			"urls": [
-				"bzz-raw://e57aedf0f3359c7ce1aaacfeb979abb2213b43a8f9fc47b364e84ebf431756cc",
-				"dweb:/ipfs/QmUcwqXcv7fch4jFYENAUD9LrnZbfuhqgPf4BXZwy3xaNy"
+				"bzz-raw://a16ead3543c548e18dda5dcf791cd7d95001867507cbbede525efd73ae21da55",
+				"dweb:/ipfs/Qmee4vuAd8Pa4C9bXdPMoCUcUGq9sV7v9uXBYcDVTMLSAx"
 			]
 		}
 	},

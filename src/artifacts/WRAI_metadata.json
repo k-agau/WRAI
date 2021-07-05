@@ -8,7 +8,7 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "contract Coin",
 						"name": "_underlyingToken",
 						"type": "address"
 					},
@@ -376,6 +376,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "divisor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -573,19 +586,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "token",
-				"outputs": [
-					{
-						"internalType": "contract Coin",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "totalSupply",
 				"outputs": [
 					{
@@ -655,7 +655,7 @@
 				"name": "underlyingToken",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "contract Coin",
 						"name": "",
 						"type": "address"
 					}
@@ -697,7 +697,13 @@
 					}
 				],
 				"name": "withdraw",
-				"outputs": [],
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			}
@@ -764,10 +770,10 @@
 			]
 		},
 		"src/WRAI.sol": {
-			"keccak256": "0x3290877055ac7200975c711727c9e9f5888f27c99e0a6b4e951c6008f9312cf3",
+			"keccak256": "0x8a3252e7ab3562c6f3019deea7885d3b27a047f274b1d4587a5c680f5a30112b",
 			"urls": [
-				"bzz-raw://5b6b2303c94926f37f07b0d9b2bb29485a82f168138585dcead672e95a34b099",
-				"dweb:/ipfs/QmWGzQGNGoiRonTAhWu8kPRF72UdupfYEPnu1F6fPgBmhA"
+				"bzz-raw://67007a09a5796c55956a0ae1a3117efab58954de6e2e18c02ee2f68a6028e81d",
+				"dweb:/ipfs/QmTHtGwNDtwaCK28zPiR43qUgp6CUu86BFYQU3Y3wVGSfQ"
 			]
 		}
 	},
