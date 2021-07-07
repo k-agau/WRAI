@@ -1,7 +1,7 @@
 pragma solidity 0.6.7;
 
 import "https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol";
-import "/src/WrappedToken.sol";
+import "/contracts/WrappedToken.sol";
 
 contract TokenUser {
     WrappedToken public token;
@@ -44,7 +44,10 @@ contract TokenUser {
     uint constant initialBalanceCal = 100;
     
     TmpOracleRelayer oracleRelayer;
-
+    
+    address         underlyingTokenAddress;
+    address         oracleAddress;
+    address         wrappedTokenAddress;
     Coin            underlyingToken;
     WrappedToken    wrappedToken;
     Hevm            hevm;
@@ -76,10 +79,13 @@ contract TokenUser {
     function setUp() public {
         hevm = Hevm(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
         hevm.warp(604411200);
-        oracleRelayer = new TmpOracleRelayer(3);
         
-
-        underlyingToken = createToken();
+        underlyingTokenAddress = 0x7Db050d57Fcb5D551e56D39a62aa090eB04c63D2;
+        oracleAddress = 0xf11c0F2460A7Fc762C7e5a28436766d254C8DC75;
+        wrappedTokenAddress = 0x1BF4F640C92DE92263A62ca38779c41da1e17bCE;
+        underlyingToken = Coin(underlyingTokenAddress);
+        oracleRelayer = TmpOracleRelayer(oracleAddress);
+        wrappedToken = WrappedToken(wrappedTokenAddress);
         
         user1 = address(new TokenUser(wrappedToken));
 
@@ -89,14 +95,14 @@ contract TokenUser {
         self = address(this);
     }
     
-    function createToken() internal returns (Coin) {
+/*    function createToken() internal returns (Coin) {
         return new Coin("Rai", "RAI", 99);
     }
     
     function createWrappedToken() internal returns (WrappedToken) {
-        return new WrappedToken(underlyingToken, oracleRelayer, "Wrapped Rai", "WRAI", 99);
+        return new WrappedToken(underlyingTokenAddress, oracleAddress, "Wrapped Rai", "WRAI", 99);
     }
-    
+*/
     function testSetup() public {
         assertEq(oracleRelayer.redemptionPrice(), 3);
         assertEq(underlyingToken.balanceOf(self), initialBalanceThis);

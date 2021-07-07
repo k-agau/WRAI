@@ -42,6 +42,13 @@
 		"remappings": []
 	},
 	"sources": {
+		"/contracts/Coin.sol": {
+			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
+			"urls": [
+				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
+				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
+			]
+		},
 		"/contracts/TmpOracleRelayer.sol": {
 			"keccak256": "0xcb2ebf34f6077f641725e8fb68eb72e58ac8cfd1a1753bac72ccf36fc54f6ffc",
 			"urls": [
@@ -49,18 +56,11 @@
 				"dweb:/ipfs/QmP3MEdMfHdAA2Tds3s7fSQwBTwxjYHzHtiViHbsrjTFYE"
 			]
 		},
-		"/src/Coin.sol": {
-			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
+		"/contracts/WrappedToken.sol": {
+			"keccak256": "0x2dc0f8cb2c43841072a922cfb44332adc71d898d63d3237ad82988cc1b50577e",
 			"urls": [
-				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
-				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
-			]
-		},
-		"/src/WrappedToken.sol": {
-			"keccak256": "0x1d1f9bb1d932419d577a00769925673a444e8f932ab1ab8a6eed2dc59aa6237f",
-			"urls": [
-				"bzz-raw://1aebed486caa1629b3902156f1eded77a2015b0c6c7b6b3964aa91f0e2b27370",
-				"dweb:/ipfs/Qme1iQtECoGccFmCL1BFERtTd6WBtqiLo8fyHVENJcyx7V"
+				"bzz-raw://317d1b9fb846e409f6f41d540529bf3c328e3323c3a1b4750630d3a39ca1c182",
+				"dweb:/ipfs/QmYWzDwKEMonYm3xMobGY8eU2dWFzDtCgAbYksZ9L4GQ3K"
 			]
 		},
 		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
@@ -71,10 +71,10 @@
 			]
 		},
 		"tests/testing.sol": {
-			"keccak256": "0x3894854cc9d82298d0130ed219daf73a0479b73d505d9ec4b2415f4fa98de964",
+			"keccak256": "0xa1de9d81938d510eb58c6a66343b28943bf0bbd2e891968854d093138851b4b1",
 			"urls": [
-				"bzz-raw://a523eea2a672537afdcfa78485ccc6e6b90bb2f07a7fbad1aa6b5c577080e196",
-				"dweb:/ipfs/QmRvBVQEjqwv6opK4b2PyFAK9nrPoHjjFLJyeZtRkoAmVY"
+				"bzz-raw://52702cf3518ff789603efb2670e4151ef87df7fe943d3004c2f30ab01ba64878",
+				"dweb:/ipfs/QmXNWHL7tKi9CcZ1JKhqipXJ96y856VBxbwyDpj1dM8CVt"
 			]
 		}
 	},
