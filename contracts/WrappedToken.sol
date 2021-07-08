@@ -22,15 +22,11 @@ import "./TmpOracleRelayer.sol";
 pragma solidity 0.6.7;
 
 // TO-DO:
-// Posibily update allownaces
-// Add safe multiplication AND DIVISION
-// Fix events, specifically making them the wrapped price
 // Fix events in the testing file too ***
 // Make sure balances include the redemption factor in the testing files
 // Add safety for redemption Price = 0 (oracle set bounds maybe?)
-// Withdraw should be for authorized users, not just for src == msg.sender
 // Where to incorp RAY
-// Make all fns in terms of wrapped amt
+// Does burn/withdraw require a look into allowances?
 // Finish testing
 // Last read over
 
@@ -96,10 +92,10 @@ contract WrappedToken {
     // --- Events ---
     event AddAuthorization(address account);
     event RemoveAuthorization(address account);
-    event Approval(address indexed src, address indexed guy, uint256 amount);
-    event Transfer(address indexed src, address indexed dst, uint256 amount);
+    event Approval(address indexed src, address indexed guy, uint256 wrappedAmount);
+    event Transfer(address indexed src, address indexed dst, uint256 wrappedAmount);
     event Deposit(address src, uint amountInUnderlying);
-    event Withdraw(address src, uint amountInUnderlying);
+    event Withdraw(address src, uint wrappedAmount);
 
 
     // --- Math ---
@@ -112,14 +108,10 @@ contract WrappedToken {
     function multiply(uint256 x, uint256 y) internal pure returns (uint256 z) {
         require(y == 0 || (z = x * y) / y == x, "SAFEEngine/multiply-uint-uint-overflow");
     }
-    function div(
-        uint256 a,
-        uint256 b,
-        string memory errorMessage
-    ) internal pure returns (uint256) {
-            require(b > 0, errorMessage);
-            return a / b;
-        }
+    function divide(uint256 x, uint256 y) internal pure returns (uint256 z) {
+            require(y > 0, "WrappedToken/div-uint-uint-overflow");
+            z = x / y;
+    }
 
     // --- EIP712 niceties ---
     bytes32 public DOMAIN_SEPARATOR;
@@ -130,15 +122,15 @@ contract WrappedToken {
         string memory name_,
         string memory symbol_,
         uint256 chainId_,
-        Coin _underlyingToken,
-        TmpOracleRelayer _oracleRelayer
+        Coin underlyingToken_,
+        TmpOracleRelayer oracleRelayer_
       ) public {
         authorizedAccounts[msg.sender] = 1;
         name                = name_;
         symbol              = symbol_;
         chainId             = chainId_;
-        underlyingToken     = _underlyingToken;
-        oracleRelayer       = _oracleRelayer;
+        underlyingToken     = underlyingToken_;
+        oracleRelayer       = oracleRelayer_;
         DOMAIN_SEPARATOR    = keccak256(abi.encode(
             keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
             keccak256(bytes(name)),
@@ -149,19 +141,19 @@ contract WrappedToken {
         emit AddAuthorization(msg.sender);
     }
     
-    // These are the functions specific to the wrapped Token\
+    // These are the functions specific to the wrapped Token
     
     /**
      * @dev allows the smart contract to mint
      * tokens to a user's account without any additional steps
      * 
      * @param  src The address to which the coins are minted
-     * @param  amt The amount of tokens to be minted to the given address
+     * @param  underlyingAmount The amount of tokens to be minted to the given address
      * 
     **/
-    function _mint(address src, uint amt) private {
-        _balances[src] = addition(_balances[src], amt);
-        totalSupply = addition(totalSupply, amt);
+    function _mint(address src, uint underlyingAmount) private {
+        _balances[src] = addition(_balances[src], underlyingAmount);
+        totalSupply = addition(totalSupply, underlyingAmount);
     }
     
     /**
@@ -182,6 +174,7 @@ contract WrappedToken {
      * oracle and updates that price to the redemptionPrice variable
      * 
      * Retrieves the current price of Rai
+     * 
     **/
     function updateRedemptionPrice() public {
         redemptionPrice = oracleRelayer.redemptionPrice();
@@ -190,7 +183,9 @@ contract WrappedToken {
     /**
      * @dev Allows users to deposit the underlying token
      * in a 1:1 ratio for the wrapped token. The disparity
-     * in price is accounted for in the balanceOf() function.
+     * in price is accounted for in the balanceOf() 
+     * and the allowance() functions. New tokens are minted
+     * with each deposit.
      * 
      * Users deposit the underlying token for the wrapped token
      * 
@@ -210,6 +205,7 @@ contract WrappedToken {
      * @dev Allows users to withdraw the underlying token
      * in a 1:1 ratio for the wrapped token. The disparity
      * in price is accounted for in the balanceOf() function.
+     * The wrapped tokens are burned with each withdrawal.
      * 
      * Users exchange wrapped token for the underlying token
      * 
@@ -220,42 +216,61 @@ contract WrappedToken {
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
         require(src == msg.sender);
         
-        // Is this necessary?
-        uint balance = _balances[src];
+        uint balance = balanceOf(src);
         require(balance >= wrappedAmount);
         
         updateRedemptionPrice();
-        uint unwrappedAmount = convertToUnderlyingAmount(wrappedAmount);
-        _burn(src, wrappedAmount);
+        uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
+        _burn(src, underlyingAmount);
         
-        underlyingToken.transferFrom(address(this), msg.sender, unwrappedAmount);
+        underlyingToken.transferFrom(address(this), msg.sender, underlyingAmount);
         
-        emit Withdraw(src, unwrappedAmount);
+        emit Withdraw(src, underlyingAmount);
         
         return true;
     }
     
-    function balanceOf(address src) external returns (uint256) {
+    /**
+     * @notice Returns the true balanace in wrapped tokens based on the redemption price
+     * @param src The address of the user whose balance will be returned
+     * 
+    **/ 
+    function balanceOf(address src) public returns (uint256) {
         updateRedemptionPrice();
         uint unwrappedAmount = _balances[src];
         return multiply(unwrappedAmount, redemptionPrice) / RAY;
     }
     
+    /**
+     * @notice Returns the true allowance in wrapped tokens based on the redemption price
+     * @param owner The owner of the funds
+     * @param spender The spender of the funds of address owner
+     * 
+    **/
     function allowance(address owner, address spender) public returns (uint256) {
         updateRedemptionPrice();
         return multiply(_allowances[owner][spender], redemptionPrice);
     }
     
+    /**
+     * @notice Convers the underlying amount to the wrapped amount
+     * @param underlyingAmount The amount in the underlying token to be converted
+     * 
+    **/
     function convertToWrappedAmount(uint underlyingAmount) public returns (uint256) {
         updateRedemptionPrice();
-        return div(multiply(underlyingAmount, redemptionPrice), RAY, "@WrappedToken/Division Error");
+        return divide(multiply(underlyingAmount, redemptionPrice), RAY);
     }
     
+    /**
+     * @notice Convers the wrapped amount to the underlying amount
+     * @param wrappedAmount The amount in the underlying token to be converted
+     * 
+    **/
     function convertToUnderlyingAmount(uint wrappedAmount) public returns (uint256) {
         updateRedemptionPrice();
-        return div(multiply(wrappedAmount, RAY), redemptionPrice, "@WrappedToken/Division Error");
+        return divide(multiply(wrappedAmount, RAY), redemptionPrice);
     }
-
 
     // --- Token ---
     /*
@@ -297,7 +312,7 @@ contract WrappedToken {
         uint amount = convertToUnderlyingAmount(wrappedAmount);
         _balances[usr] = addition(_balances[usr], amount);
         totalSupply    = addition(totalSupply, amount);
-        emit Transfer(address(0), usr, amount);
+        emit Transfer(address(0), usr, wrappedAmount);
     }
     /*
     * @notice Burn coins from an address

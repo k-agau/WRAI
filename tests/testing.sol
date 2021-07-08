@@ -57,7 +57,7 @@ contract WrappedTokenUser {
     
     function doUpdateRedemptionPrice() public returns (uint256) {
         token.updateRedemptionPrice();
-        return token.conversionFactor();
+        return token.redemptionPrice();
     }
     
     function doDeposit(address src, uint underlyingAmount) public returns (bool) {
@@ -70,6 +70,14 @@ contract WrappedTokenUser {
     
     function doBalanceOf(address src) public returns (uint256) {
         return token.balanceOf(src);
+    }
+    
+    function doConvertToWrappedAmount(uint underlyingAmount) public returns (uint256) {
+        return token.convertToWrappedAmount(underlyingAmount);
+    }
+    
+    function doConvertToUnderlyingAmount(uint wrappedAmount) public returns (uint256) {
+        return token.convertToUnderlyingAmount(wrappedAmount);
     }
     
     // Original Coin do functions with the exception of moving doBalanceOf(address who) up to the wrapped section
@@ -96,7 +104,6 @@ contract WrappedTokenUser {
 
     function doAllowance(address owner, address spender)
         public
-        view
         returns (uint)
     {
         return token.allowance(owner, spender);
@@ -141,6 +148,10 @@ contract CoinTest is DSTest {
     WrappedToken            wrappedToken;
     Coin                    underlyingToken;
     TmpOracleRelayer        oracleRelayer;
+    
+    address wrappedTokenAddress;
+    address underlyingTokenAddress;
+    address oracleRelayerAddress;
     
     Hevm    hevm;
 
@@ -385,41 +396,59 @@ contract CoinTest is DSTest {
     // Transfer all out in users? create new users?
     
     function testUpdateRedemptionPrice() public {
-        
+        wrappedToken.updateRedemptionPrice();
+        assertEq(wrappedToken.redemptionPrice(), setRedemption);
     }
     
     function testDeposit() public {
+        uint depositAmt = 1000;
+        uint wrappedDepositAmt = wrappedToken.convertToWrappedAmount(depositAmt);
+        assertEq(wrappedToken.balanceOf(user2), 0);
+        assertEq(underlyingToken.balanceOf(user2), 0);
+        underlyingToken.mint(user2, depositAmt);
+        wrappedToken.deposit(user2, depositAmt);
         
+        assertEq(wrappedToken.balanceOf(user2), wrappedDepositAmt);
+        assertEq(underlyingToken.balanceOf(user2), 0);
     }
     
     function testDepositZero() public {
-        
+        uint depositAmt = 1000;
+        uint wrappedDepositAmt = wrappedToken.convertToWrappedAmount(depositAmt);
+        wrappedToken.deposit(user2, 0);
+        assertEq(wrappedToken.balanceOf(user2), wrappedDepositAmt);
     }
     
     function testDepositMoreThanBalance() public {
-        
+        uint depositAmt = 1000;
+        uint wrappedDepositAmt = wrappedToken.convertToWrappedAmount(depositAmt);
+        underlyingToken.mint(user2, 50);
+        wrappedToken.deposit(user2, depositAmt);
+        assertEq(wrappedToken.balanceOf(user2), wrappedDepositAmt);
     }
     
-    
     function testWithdraw() public {
-        
+        uint withdrawAmt = 500;
+        uint wrappedWithdrawal = wrappedToken.convertToWrappedAmount(withdrawAmt);
+        wrappedToken.withdraw(user2, wrappedWithdrawal);
+        assertEq(underlyingToken.balanceOf(user2), 550);
+        assertEq(wrappedToken.balanceOf(user2), wrappedToken.convertToWrappedAmount(500));
     }
     
     function testWithdrawZero() public {
-        
+        wrappedToken.withdraw(user2, 0);
+        assertEq(underlyingToken.balanceOf(user2), 550);
+        assertEq(wrappedToken.balanceOf(user2), wrappedToken.convertToWrappedAmount(500));
     } 
     
     function testWithdrawMoreThanBalance() public {
-        
+        wrappedToken.withdraw(user2, 10000);
+        assertEq(underlyingToken.balanceOf(user2), 550);
+        assertEq(wrappedToken.balanceOf(user2), wrappedToken.convertToWrappedAmount(500));
     }
     
     function testBalanceOf() public {
-        
+        uint expectedBalance = wrappedToken.convertToWrappedAmount(500);
+        assertEq(wrappedToken.balanceOf(user2), expectedBalance);
     }
-    
-    
-    
-    
-    
-    
 }

@@ -24,12 +24,12 @@
 					},
 					{
 						"internalType": "contract Coin",
-						"name": "_underlyingToken",
+						"name": "underlyingToken_",
 						"type": "address"
 					},
 					{
 						"internalType": "contract TmpOracleRelayer",
-						"name": "_oracleRelayer",
+						"name": "oracleRelayer_",
 						"type": "address"
 					}
 				],
@@ -67,7 +67,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -124,7 +124,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -143,7 +143,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "amountInUnderlying",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -734,8 +734,29 @@
 						"account": "Account to add auth to"
 					}
 				},
+				"allowance(address,address)": {
+					"params": {
+						"owner": "The owner of the funds",
+						"spender": "The spender of the funds of address owner \r*"
+					}
+				},
+				"balanceOf(address)": {
+					"params": {
+						"src": "The address of the user whose balance will be returned \r*"
+					}
+				},
+				"convertToUnderlyingAmount(uint256)": {
+					"params": {
+						"wrappedAmount": "The amount in the underlying token to be converted \r*"
+					}
+				},
+				"convertToWrappedAmount(uint256)": {
+					"params": {
+						"underlyingAmount": "The amount in the underlying token to be converted \r*"
+					}
+				},
 				"deposit(address,uint256)": {
-					"details": "Allows users to deposit the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. \r Users deposit the underlying token for the wrapped token \r",
+					"details": "Allows users to deposit the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf()  and the allowance() functions. New tokens are minted with each deposit. \r Users deposit the underlying token for the wrapped token \r",
 					"params": {
 						"amountInUnderlying": "The amount of the underlying token being deposited \r*",
 						"src": "The address of the depositor"
@@ -747,10 +768,10 @@
 					}
 				},
 				"updateRedemptionPrice()": {
-					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variable \r Retrieves the current price of Rai*"
+					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variable \r Retrieves the current price of Rai \r*"
 				},
 				"withdraw(address,uint256)": {
-					"details": "Allows users to withdraw the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. \r Users exchange wrapped token for the underlying token \r",
+					"details": "Allows users to withdraw the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. The wrapped tokens are burned with each withdrawal. \r Users exchange wrapped token for the underlying token \r",
 					"params": {
 						"src": "The address of the depositor",
 						"wrappedAmount": "The amount of wrapped tokens to be exchanged for the underlying token \r*"
@@ -762,6 +783,18 @@
 			"methods": {
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
+				},
+				"allowance(address,address)": {
+					"notice": "Returns the true allowance in wrapped tokens based on the redemption price"
+				},
+				"balanceOf(address)": {
+					"notice": "Returns the true balanace in wrapped tokens based on the redemption price"
+				},
+				"convertToUnderlyingAmount(uint256)": {
+					"notice": "Convers the wrapped amount to the underlying amount"
+				},
+				"convertToWrappedAmount(uint256)": {
+					"notice": "Convers the underlying amount to the wrapped amount"
 				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
@@ -800,10 +833,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0x912be5d7ce946b46822a05310bd86ce17b7240f025cc09c5d0be7c5b6d770783",
+			"keccak256": "0xc1cdc6a921dd9e7544e2f7823ac252ca1daaf9bd036086a823646eea258c34e1",
 			"urls": [
-				"bzz-raw://f3a16f620838834db98909779e614e39d65141fe18b64ca9b07ff3de003bfbbd",
-				"dweb:/ipfs/QmRKxn34e2RHgyU5hAJrWvmzvSYfbUXr6LbXay5kQtQ3hE"
+				"bzz-raw://58f72382b39da68a033db39363268eb391d2d890a3f7d898d453275ee63f027a",
+				"dweb:/ipfs/QmRmJEb5xyWvGBgeCb7tSWi6ZyTGnhMK2AXa2yHJLPzQPm"
 			]
 		}
 	},
