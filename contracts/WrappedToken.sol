@@ -27,10 +27,10 @@ pragma solidity 0.6.7;
 // Fix events, specifically making them the wrapped price
 // Fix events in the testing file too ***
 // Make sure balances include the redemption factor in the testing files
+// Add safety for redemption Price = 0 (oracle set bounds maybe?)
+// Withdraw should be for authorized users, not just for src == msg.sender
 // Finish testing
 // Last read over
-
-
 
 contract WrappedToken {
     // --- Auth ---

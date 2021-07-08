@@ -104,10 +104,10 @@
 			]
 		},
 		"/contracts/WrappedToken.sol": {
-			"keccak256": "0xc9f54e3a8a9ad221f7462dedcaa8ccca3d8ce89206d358fb75d3d177b75f4d07",
+			"keccak256": "0xc48210c0ceec85ff8008451d5764e228e71937e07f6bcd8d0e0c41a10924b544",
 			"urls": [
-				"bzz-raw://7a989cbaa3be632bb54c0404c578bf56b7dfe417b5426bd6731e9f4f1e674356",
-				"dweb:/ipfs/QmWdTYq9BKtPbqvnJAtbe6c6531SWATTHJwe4djCkwDqpv"
+				"bzz-raw://db5dc947b3a97c0aa67f2fece78796c94b097126cca4a3de4b4542517c236ed4",
+				"dweb:/ipfs/Qmc9bdNXWZkgCuG2UXMq9NaQ1pfw1cvmAFG8dbtL773DSL"
 			]
 		},
 		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
@@ -118,10 +118,10 @@
 			]
 		},
 		"tests/testing.sol": {
-			"keccak256": "0xbaff5df7d5673267d8b0f959f23c00fa16898c55cd4b3d1830e58f0a3d877474",
+			"keccak256": "0xaee9774de9c2c965fdd6702e59e19f6cc49f15422963e8f5b0024dea26f41ad7",
 			"urls": [
-				"bzz-raw://e602012659b3dd9b3f4d0b11f289569babf08ab2e9034179b8bcaa072b779558",
-				"dweb:/ipfs/QmXzG1sC4mMJ5g3QUgWvHan9bLnTs56zsRdG8rXfmBAmA9"
+				"bzz-raw://bca4b7b89df1e146f47938671ac100e4f06744806bbbeb040d226afec91fc271",
+				"dweb:/ipfs/QmQjJQLLWDvrfQo2qUmcFy26XuHiJfCLzPtKHReB7c3UZN"
 			]
 		}
 	},

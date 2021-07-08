@@ -382,6 +382,8 @@ contract CoinTest is DSTest {
     
     // Wrapper specific tests:
     
+    // Transfer all out in users? create new users?
+    
     function testUpdateRedemptionPrice() public {
         
     }
@@ -390,7 +392,24 @@ contract CoinTest is DSTest {
         
     }
     
+    function testDepositZero() public {
+        
+    }
+    
+    function testDepositMoreThanBalance() public {
+        
+    }
+    
+    
     function testWithdraw() public {
+        
+    }
+    
+    function testWithdrawZero() public {
+        
+    } 
+    
+    function testWithdrawMoreThanBalance() public {
         
     }
     
