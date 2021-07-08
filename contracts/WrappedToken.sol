@@ -25,6 +25,8 @@ pragma solidity 0.6.7;
 // Posibily update allownaces
 // Add safe multiplication
 // Fix events, specifically making them the wrapped price
+// Fix events in the testing file too ***
+// Make sure balances include the redemption factor in the testing files
 // Finish testing
 // Last read over
 
