@@ -613,7 +613,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -798,6 +798,9 @@
 				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
+				},
+				"totalSupply()": {
+					"notice": "returns the total supply \r*"
 				}
 			}
 		}
@@ -833,10 +836,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0xc1cdc6a921dd9e7544e2f7823ac252ca1daaf9bd036086a823646eea258c34e1",
+			"keccak256": "0xf8f522f1f74f32a2ceef0dd2006aecbcec032e83acd9fe10b183728aebd5d2b2",
 			"urls": [
-				"bzz-raw://58f72382b39da68a033db39363268eb391d2d890a3f7d898d453275ee63f027a",
-				"dweb:/ipfs/QmRmJEb5xyWvGBgeCb7tSWi6ZyTGnhMK2AXa2yHJLPzQPm"
+				"bzz-raw://c964df76adb5c377bc84d68922b8e5d6da3d90b2d4fc8f20a0076ecd8b658373",
+				"dweb:/ipfs/QmWaT137TLuYGhrv1iqeB7x3eNk8Z6cVducNG97r5WPdVf"
 			]
 		}
 	},

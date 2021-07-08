@@ -1,9 +1,5 @@
 pragma solidity 0.6.7;
 
-import "./Coin.sol";
-import "./TmpOracleRelayer.sol"; 
-
-
 // Copyright (C) 2017, 2018, 2019 dbrock, rain, mrchico
 
 // This program is free software: you can redistribute it and/or modify
@@ -19,16 +15,10 @@ import "./TmpOracleRelayer.sol";
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-pragma solidity 0.6.7;
+import "contracts/Coin.sol";
+import "contracts/TmpOracleRelayer.sol";
 
-// TO-DO:
-// Fix events in the testing file too ***
-// Make sure balances include the redemption factor in the testing files
-// Add safety for redemption Price = 0 (oracle set bounds maybe?)
-// Where to incorp RAY
-// Does burn/withdraw require a look into allowances?
-// Finish testing
-// Last read over
+pragma solidity 0.6.7;
 
 contract WrappedToken {
     // --- Auth ---
@@ -69,7 +59,7 @@ contract WrappedToken {
     
     // --- Wrapper-Specific Data ---
     // The underlying token
-    Coin public immutable underlyingToken;
+    Coin public underlyingToken;
     // The oracle to be sent to this address
     TmpOracleRelayer public oracleRelayer;
     // Conversion factor for the redemption price.
@@ -80,7 +70,7 @@ contract WrappedToken {
     // The id of the chain where this coin was deployed
     uint256 public chainId;
     // The total supply of this coin
-    uint256 public totalSupply;
+    uint256 private _totalSupply;
 
     // Mapping of coin balances
     mapping (address => uint256)                      private _balances;
@@ -129,8 +119,9 @@ contract WrappedToken {
         name                = name_;
         symbol              = symbol_;
         chainId             = chainId_;
-        underlyingToken     = underlyingToken_;
-        oracleRelayer       = oracleRelayer_;
+	    underlyingToken     = underlyingToken_;
+	    oracleRelayer       = oracleRelayer_;
+
         DOMAIN_SEPARATOR    = keccak256(abi.encode(
             keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
             keccak256(bytes(name)),
@@ -153,7 +144,7 @@ contract WrappedToken {
     **/
     function _mint(address src, uint underlyingAmount) private {
         _balances[src] = addition(_balances[src], underlyingAmount);
-        totalSupply = addition(totalSupply, underlyingAmount);
+        _totalSupply = addition(_totalSupply, underlyingAmount);
     }
     
     /**
@@ -166,7 +157,7 @@ contract WrappedToken {
     **/
     function _burn(address src, uint amt) private {
         _balances[src] = subtract(_balances[src], amt);
-        totalSupply = subtract(totalSupply, amt);
+        _totalSupply = subtract(_totalSupply, amt);
     }
     
     /**
@@ -237,8 +228,7 @@ contract WrappedToken {
     **/ 
     function balanceOf(address src) public returns (uint256) {
         updateRedemptionPrice();
-        uint unwrappedAmount = _balances[src];
-        return multiply(unwrappedAmount, redemptionPrice) / RAY;
+        return convertToWrappedAmount(_balances[src]);
     }
     
     /**
@@ -249,7 +239,7 @@ contract WrappedToken {
     **/
     function allowance(address owner, address spender) public returns (uint256) {
         updateRedemptionPrice();
-        return multiply(_allowances[owner][spender], redemptionPrice);
+        return convertToWrappedAmount(_allowances[owner][spender]);
     }
     
     /**
@@ -270,6 +260,14 @@ contract WrappedToken {
     function convertToUnderlyingAmount(uint wrappedAmount) public returns (uint256) {
         updateRedemptionPrice();
         return divide(multiply(wrappedAmount, RAY), redemptionPrice);
+    }
+    
+    /**
+     * @notice returns the total supply
+     * 
+    **/
+    function totalSupply() public returns (uint256) {
+        return convertToWrappedAmount(_totalSupply);
     }
 
     // --- Token ---
@@ -311,7 +309,7 @@ contract WrappedToken {
     function mint(address usr, uint256 wrappedAmount) external isAuthorized {
         uint amount = convertToUnderlyingAmount(wrappedAmount);
         _balances[usr] = addition(_balances[usr], amount);
-        totalSupply    = addition(totalSupply, amount);
+        _totalSupply    = addition(_totalSupply, amount);
         emit Transfer(address(0), usr, wrappedAmount);
     }
     /*
@@ -327,7 +325,7 @@ contract WrappedToken {
             _allowances[usr][msg.sender] = subtract(_allowances[usr][msg.sender], amount);
         }
         _balances[usr] = subtract(_balances[usr], amount);
-        totalSupply    = subtract(totalSupply, amount);
+        _totalSupply    = subtract(_totalSupply, amount);
         emit Transfer(usr, address(0), wrappedAmount);
     }
     /*
@@ -405,84 +403,3 @@ contract WrappedToken {
         emit Approval(holder, spender, wad);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// MAJOR INHERITANCE PROBLEM
-// BALANCE COMES FROM BALANCEOF()
-// CANNOT INHERIT COIN.SOL
-
-
-/*
-contract WrappedToken is Coin {
-    
-    // @dev The rate of 1 RAI to 1 Wrapped RAI and the divisor
-    uint public conversionFactor;
-    uint public constant DIVISOR = 10 ** 27;
-
-    // @dev The token of the address for the underlying token
-    address public uTAd;
-    Coin public immutable underlyingToken;
-    
-    // @dev A temporary Oracle being used for testing convenience
-    address public tOAd;
-    TmpOracleRelayer public immutable tmpOracle;
-    
-    // @dev Events for after tokens are deposited and withdrawn
-    event Deposit(address src, uint amountInUnderlying);
-    event Withdraw(address src, uint amountInUnderlying);
-    
-    // @dev A constructor that takes in the address of the underlying token and an Oracle that will also create a new Coin
-    constructor(address _underlyingToken, address _tmpOracle, string memory name, string memory symbol, uint _chainId) public Coin(name, symbol, _chainId) {
-        uTAd = _underlyingToken;
-        underlyingToken = Coin(uTAd);
-        tOAd = _tmpOracle;
-        tmpOracle = TmpOracleRelayer(tOAd);
-    }
-    
-    /// @dev Uses the Oracle to update the redemption price
-    
-    function balance(address src) public returns(uint256) {
-        updateRedemptionPrice();
-        uint wrappedAmount = this.balanceOf(src) * conversionFactor / DIVISOR;
-        return wrappedAmount;
-    }
-*/

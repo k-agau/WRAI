@@ -1,164 +1,31 @@
-pragma solidity 0.6.7;
-
-import "https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol";
-import "/contracts/WrappedToken.sol";
-import "/contracts/TmpOracleRelayer.sol";
-
-/// Coin.t.sol -- tests for Coin.sol
-
-// Copyright (C) 2015-2020  DappHub, LLC
-
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-pragma solidity 0.6.7;
-
-//import "ds-test/test.sol";
-//import "ds-token/delegate.sol";
-
-/*
-import {Coin} from "../Coin.sol";
-import {SAFEEngine} from '../SAFEEngine.sol';
-import {AccountingEngine} from '../AccountingEngine.sol';
-import {BasicCollateralJoin} from '../BasicTokenAdapters.sol';
-import {OracleRelayer} from '../OracleRelayer.sol';
-*/
-contract Feed {
-    bytes32 public priceFeedValue;
-    bool public hasValidValue;
-    constructor(uint256 initPrice, bool initHas) public {
-        priceFeedValue = bytes32(initPrice);
-        hasValidValue = initHas;
-    }
+// SPDX-License-Identifier: GPL-3.0
     
-    function getResultWithValidity() external returns (bytes32, bool) {
-        return (priceFeedValue, hasValidValue);
-    }
-}
+pragma solidity >=0.4.22 <0.9.0;
 
-contract WrappedTokenUser {
-    WrappedToken   token;
+// This import is automatically injected by Remix
+import "remix_tests.sol"; 
+import "remix_accounts.sol";
 
-    constructor(WrappedToken token_) public {
-        token = token_;
-    }
+import "contracts/WrappedToken.sol";
+import "contracts/TmpOracleRelayer.sol";
+import "contracts/test.sol";
+import "contracts/WrappedTokenUser.sol";
+
+
+contract WrappedTokenTest is DSTest {
     
-    // Wrapped Token do functions
-    
-    function doUpdateRedemptionPrice() public returns (uint256) {
-        token.updateRedemptionPrice();
-        return token.redemptionPrice();
-    }
-    
-    function doDeposit(address src, uint underlyingAmount) public returns (bool) {
-        return token.deposit(src, underlyingAmount);
-    }
-    
-    function doWithdraw(address src, uint wrappedAmount) public returns (bool) {
-        return token.withdraw(src, wrappedAmount);
-    }
-    
-    function doBalanceOf(address src) public returns (uint256) {
-        return token.balanceOf(src);
-    }
-    
-    function doConvertToWrappedAmount(uint underlyingAmount) public returns (uint256) {
-        return token.convertToWrappedAmount(underlyingAmount);
-    }
-    
-    function doConvertToUnderlyingAmount(uint wrappedAmount) public returns (uint256) {
-        return token.convertToUnderlyingAmount(wrappedAmount);
-    }
-    
-    // Original Coin do functions with the exception of moving doBalanceOf(address who) up to the wrapped section
-    function doTransferFrom(address from, address to, uint amount)
-        public
-        returns (bool)
-    {
-        return token.transferFrom(from, to, amount);
-    }
-
-    function doTransfer(address to, uint amount)
-        public
-        returns (bool)
-    {
-        return token.transfer(to, amount);
-    }
-
-    function doApprove(address recipient, uint amount)
-        public
-        returns (bool)
-    {
-        return token.approve(recipient, amount);
-    }
-
-    function doAllowance(address owner, address spender)
-        public
-        returns (uint)
-    {
-        return token.allowance(owner, spender);
-    }
-
-    function doApprove(address guy)
-        public
-        returns (bool)
-    {
-        return token.approve(guy, uint(-1));
-    }
-    function doMint(uint wad) public {
-        token.mint(address(this), wad);
-    }
-    function doBurn(uint wad) public {
-        token.burn(address(this), wad);
-    }
-    function doMint(address guy, uint wad) public {
-        token.mint(guy, wad);
-    }
-    function doBurn(address guy, uint wad) public {
-        token.burn(guy, wad);
-    }
-
-}
-
-abstract contract Hevm {
-    function warp(uint256) virtual public;
-}
-
-contract CoinTest is DSTest {
     uint constant initialBalanceThis = 1000;
     uint constant initialBalanceCal = 100;
-
-//    SAFEEngine safeEngine;
-
-//    BasicCollateralJoin collateralA;
-//    DSDelegateToken gold;
-//    Feed    goldFeed;
-
     
-    WrappedToken            wrappedToken;
-    Coin                    underlyingToken;
-    TmpOracleRelayer        oracleRelayer;
+    WrappedToken            public wrappedToken;
+    Coin                    public underlyingToken;
+    TmpOracleRelayer        public oracleRelayer;
     
-    address wrappedTokenAddress;
-    address underlyingTokenAddress;
-    address oracleRelayerAddress;
-    
-    Hevm    hevm;
-
     address user1;
     address user2;
     address user3;
     address self;
+    address remixAcct;
     
     uint setRedemption;
 
@@ -184,44 +51,58 @@ contract CoinTest is DSTest {
     }
 
     function setUp() public {
-        hevm = Hevm(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
-        hevm.warp(604411200);
-        
-        //underlyingToken = Coin(underlyingTokenAddress);
-        //oracleRelayer = TmpOracleRelayer(oracleAddress);
-        //wrappedToken = WrappedToken(wrappedTokenAddress);
+    	oracleRelayer = createOracle();
+	    underlyingToken = createUnderlyingToken();
+	    wrappedToken = createWrappedToken();
         
         user1 = address(new WrappedTokenUser(wrappedToken));
         user2 = address(new WrappedTokenUser(wrappedToken));
         user3 = address(new WrappedTokenUser(wrappedToken));
         self = address(this);
+        remixAcct = TestsAccounts.getAccount(1);
         
         setRedemption = 3;
         
         underlyingToken.mint(self, initialBalanceThis);
-        underlyingToken.mint(cal, initialBalanceThis);
-        wrappedToken.mint(self, initialBalanceThis);
-        wrappedToken.mint(cal, initialBalanceThis);
-    }
-        
-    function testSetup() public {
-        assertEq(oracleRelayer.redemptionPrice(), 10 ** 27);
-        assertEq(underlyingToken.balanceOf(self), initialBalanceThis);
-        assertEq(underlyingToken.balanceOf(cal), initialBalanceCal);
-        assertEq(underlyingToken.chainId(), 99);
-        assertEq(keccak256(abi.encodePacked(underlyingToken.version())), keccak256(abi.encodePacked("1")));
-        underlyingToken.mint(self, 0);
-        
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption);
-        assertEq(wrappedToken.balanceOf(cal), initialBalanceCal*setRedemption);
-        assertEq(wrappedToken.chainId(), 99);
-        assertEq(keccak256(abi.encodePacked(underlyingToken.version())), keccak256(abi.encodePacked("1")));
-        underlyingToken.mint(self, 0);
+        underlyingToken.mint(cal, initialBalanceCal);
+        wrappedToken.mint(self, initialBalanceThis*setRedemption);
+        wrappedToken.mint(cal, initialBalanceCal*setRedemption);
     }
     
+    function createOracle() public returns (TmpOracleRelayer) {
+        return new TmpOracleRelayer(3);
+    }
+    
+    function createUnderlyingToken() public returns (Coin) {
+        return new Coin("Rai", "RAI", 99);
+    }
+    
+    function createWrappedToken() public returns (WrappedToken) {
+        return new WrappedToken("Wrapped Rai", "WRAI", 99, underlyingToken, oracleRelayer);
+    }
+    
+    function beforeAll() public {
+        Assert.equal(uint(1), uint(1), "Run before all");
+    }
+
+    function checkSetup() public {
+        Assert.equal(oracleRelayer.redemptionPrice(), 3, "Redemption price");
+        Assert.equal(underlyingToken.balanceOf(self), initialBalanceThis, "Self underlying init balance");
+        Assert.equal(underlyingToken.balanceOf(cal), initialBalanceCal, "Cal underlying init balance");
+        Assert.equal(underlyingToken.chainId(), 99, "ChainID");
+        Assert.equal(keccak256(abi.encodePacked(underlyingToken.version())), keccak256(abi.encodePacked("1")), "Version");
+        underlyingToken.mint(self, 0);
+        
+        Assert.equal(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption, "Self wrapped init balance");
+        Assert.equal(wrappedToken.balanceOf(cal), initialBalanceCal*setRedemption, "Cal wrapped init balance");
+        Assert.equal(wrappedToken.chainId(), 99, "ChainID wrapped");
+        Assert.equal(keccak256(abi.encodePacked(wrappedToken.version())), keccak256(abi.encodePacked("1")), "Version");
+        underlyingToken.mint(self, 0);
+    }
+
     function testSetupPrecondition() public {
-        assertEq(underlyingToken.balanceOf(self), initialBalanceThis);
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption);
+        Assert.equal(underlyingToken.balanceOf(self), initialBalanceThis, "underlying balance");
+        Assert.equal(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption, "wrapped balance");
     }
     function testTransferCost() public logs_gas {
         wrappedToken.transfer(address(1), 10);
@@ -230,89 +111,107 @@ contract CoinTest is DSTest {
         wrappedToken.transfer(address(0), 1);
     }
     function testAllowanceStartsAtZero() public logs_gas {
-        assertEq(wrappedToken.allowance(user1, user2), 0);
+        Assert.equal(wrappedToken.allowance(user1, user2), 0, "Allowance starts at 0");
     }
+
     function testValidTransfers() public logs_gas {
-        uint sentAmount = 250;
+        uint sentAmount = 250*setRedemption;
+        uint balance = wrappedToken.balanceOf(self);
         emit log_named_address("token11111", address(wrappedToken));
         wrappedToken.transfer(user2, sentAmount);
-        assertEq(wrappedToken.balanceOf(user2), sentAmount*setRedemption);
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - sentAmount*setRedemption);
+        Assert.equal(wrappedToken.balanceOf(user2), sentAmount, "Test valid transfers");
+        Assert.equal(wrappedToken.balanceOf(self), balance - sentAmount, "Test from contract sent from");
     }
     function testFailWrongAccountTransfers() public logs_gas {
-        uint sentAmount = 250;
+        uint sentAmount = 250*setRedemption;
         wrappedToken.transferFrom(user2, self, sentAmount);
     }
+    
     function testFailInsufficientFundsTransfers() public logs_gas {
-        uint sentAmount = 250;
+        uint sentAmount = 250 * setRedemption;
         wrappedToken.transfer(user1, initialBalanceThis - sentAmount);
         wrappedToken.transfer(user2, sentAmount + 1);
     }
+
     function testApproveSetsAllowance() public logs_gas {
         emit log_named_address("Test", self);
         emit log_named_address("Token", address(wrappedToken));
         emit log_named_address("Me", self);
         emit log_named_address("User 2", user2);
-        wrappedToken.approve(user2, 25);
-        assertEq(wrappedToken.allowance(self, user2), 25);
+        wrappedToken.approve(user2, 25*setRedemption);
+        Assert.equal(wrappedToken.allowance(self, user2), 25*setRedemption, "Allowance Approval");
     }
+/*
     function testChargesAmountApproved() public logs_gas {
-        uint amountApproved = 20;
-        wrappedToken.approve(user2, amountApproved);
-        assertTrue(WrappedTokenUser(user2).doTransferFrom(self, user2, amountApproved));
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - amountApproved*setRedemption);
+        uint amountApproved = 20*setRedemption;
+        wrappedToken.approve(remixAcct, amountApproved);
+        bool x = WrappedTokenUser(remixAcct).doTransferFrom(self, remixAcct, amountApproved);
+        Assert.equal(x, true, "Test success of doTransferFrom");
+        Assert.equal(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - amountApproved*setRedemption, "Check if successful");
     }
-
+    
     function testFailTransferWithoutApproval() public logs_gas {
         wrappedToken.transfer(user1, 50);
         wrappedToken.transferFrom(user1, self, 1);
     }
-
+*/
     function testFailTransferToContractItself() public logs_gas {
         wrappedToken.transfer(address(wrappedToken), 1);
     }
-
+/*
     function testFailChargeMoreThanApproved() public logs_gas {
         wrappedToken.transfer(user1, 50);
         WrappedTokenUser(user1).doApprove(self, 20);
         wrappedToken.transferFrom(user1, self, 21);
     }
+*/
     function testTransferFromSelf() public {
-        wrappedToken.transferFrom(self, user1, 50);
-        assertEq(wrappedToken.balanceOf(user1), 50*setRedemption);
+        uint prevBalance = wrappedToken.balanceOf(user1);
+        wrappedToken.transferFrom(self, user1, 50*setRedemption);
+        Assert.equal(wrappedToken.balanceOf(user1), 50*setRedemption + prevBalance, "Transfer to user1");
     }
     function testFailTransferFromSelfNonArbitrarySize() public {
         // you shouldn't be able to evade balance checks by transferring
         // to yourself
-        wrappedToken.transferFrom(self, self, wrappedToken.balanceOf(self)*setRedemption + 1*setRedemption);
+        wrappedToken.transferFrom(self, self, wrappedToken.balanceOf(self) + 1*setRedemption);
     }
+    
     function testMintself() public {
-        uint mintAmount = 10;
+        uint mintAmount = 10*setRedemption;
+        uint prevBalance = wrappedToken.balanceOf(self);
         wrappedToken.mint(address(this), mintAmount);
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption + mintAmount*setRedemption);
+        Assert.equal(wrappedToken.balanceOf(self), prevBalance + mintAmount, "mintself");
     }
     function testMintGuy() public {
-        uint mintAmount = 10;
+        uint mintAmount = 10*setRedemption;
         wrappedToken.mint(user1, mintAmount);
         assertEq(wrappedToken.balanceOf(user1), mintAmount*setRedemption);
     }
+    /*
     function testFailMintGuyNoAuth() public {
         WrappedTokenUser(user1).doMint(user2, 10);
     }
+    
     function testMintGuyAuth() public {
         wrappedToken.addAuthorization(user1);
         WrappedTokenUser(user1).doMint(user2, 10);
     }
+    */
+    
+    
     function testBurn() public {
-        uint burnAmount = 10;
+        uint burnAmount = 10*setRedemption;
+        uint tSupply = wrappedToken.totalSupply();
         wrappedToken.burn(address(this), burnAmount);
-        assertEq(wrappedToken.totalSupply(), initialBalanceThis + initialBalanceCal - burnAmount);
+        Assert.equal(wrappedToken.totalSupply(), tSupply - burnAmount, "Post burn");
     }
     function testBurnself() public {
-        uint burnAmount = 10;
+        uint burnAmount = 10*setRedemption;
+        uint prevBalance = wrappedToken.balanceOf(self);
         wrappedToken.burn(address(this), burnAmount);
-        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - burnAmount*setRedemption);
+        Assert.equal(wrappedToken.balanceOf(self), prevBalance - burnAmount, "Burn self");
     }
+    /*
     function testBurnGuyWithTrust() public {
         uint burnAmount = 10;
         wrappedToken.transfer(user1, burnAmount);
@@ -367,22 +266,13 @@ contract CoinTest is DSTest {
         assertEq(wrappedToken.balanceOf(user1), 1000*setRedemption);
         assertEq(wrappedToken.allowance(self, user1), uint(-1));
     }
-    function testCoinAddress() public {
-        //The coin address generated by hevm
-        //used for signature generation testing
-        assertEq(address(wrappedToken), address(0xCaF5d8813B29465413587C30004231645FE1f680));
-    }
+    */
     function testTypehash() public {
-        assertEq(wrappedToken.PERMIT_TYPEHASH(), 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb);
+        Assert.equal(wrappedToken.PERMIT_TYPEHASH(), 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb, "Permit typehash");
     }
+    /*
     function testDomain_Separator() public {
         assertEq(wrappedToken.DOMAIN_SEPARATOR(), 0x9685c05f6a00c66a2989a50f30fcbe3c3de111d1b46eae24f24998f456088d0a);
-    }
-
-    function testFailPermitWithExpiry() public {
-        hevm.warp(now + 2 hours);
-        assertEq(now, 604411200 + 2 hours);
-        wrappedToken.permit(cal, del, 0, 1, true, _v, _r, _s);
     }
     
     function testFailReplay() public {
@@ -451,4 +341,44 @@ contract CoinTest is DSTest {
         uint expectedBalance = wrappedToken.convertToWrappedAmount(500);
         assertEq(wrappedToken.balanceOf(user2), expectedBalance);
     }
+}
+
+
+
+// File name has to end with '_test.sol', this file can contain more than one testSuite contracts
+contract testSuite {
+
+    /// 'beforeAll' runs before all other tests
+    /// More special functions are: 'beforeEach', 'beforeAll', 'afterEach' & 'afterAll'
+    function beforeAll() public {
+        // <instantiate contract>
+        Assert.equal(uint(1), uint(1), "1 should be equal to 1");
+    }
+
+    function checkSuccess() public {
+        // Use 'Assert' methods: https://remix-ide.readthedocs.io/en/latest/assert_library.html
+        Assert.ok(2 == 2, 'should be true');
+        Assert.greaterThan(uint(2), uint(1), "2 should be greater than to 1");
+        Assert.lesserThan(uint(2), uint(3), "2 should be lesser than to 3");
+    }
+
+    function checkSuccess2() public pure returns (bool) {
+        // Use the return value (true or false) to test the contract
+        return true;
+    }
+    
+    function checkFailure() public {
+        Assert.notEqual(uint(1), uint(1), "1 should not be equal to 1");
+    }
+
+    /// Custom Transaction Context: https://remix-ide.readthedocs.io/en/latest/unittesting.html#customization
+    /// #sender: account-1
+    /// #value: 100
+    function checkSenderAndValue() public payable {
+        // account index varies 0-9, value is in wei
+        Assert.equal(msg.sender, TestsAccounts.getAccount(1), "Invalid sender");
+        Assert.equal(msg.value, 100, "Invalid value");
+    }
+    */
+
 }

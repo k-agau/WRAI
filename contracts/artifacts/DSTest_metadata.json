@@ -298,48 +298,6 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "setUp",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testBalance",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testDeposit",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testSetup",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testSetupPrecondition",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testWithdraw",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -351,7 +309,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"tests/testing.sol": "WraiTest"
+			"contracts/test.sol": "DSTest"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -365,39 +323,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"/contracts/Coin.sol": {
-			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
-			"urls": [
-				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
-				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
-			]
-		},
-		"/contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0xcb2ebf34f6077f641725e8fb68eb72e58ac8cfd1a1753bac72ccf36fc54f6ffc",
-			"urls": [
-				"bzz-raw://a4ad87de1e801bd1f20f8754044b44034ed7e13a1ab5fd5d75940f2171a94cca",
-				"dweb:/ipfs/QmP3MEdMfHdAA2Tds3s7fSQwBTwxjYHzHtiViHbsrjTFYE"
-			]
-		},
-		"/contracts/WrappedToken.sol": {
-			"keccak256": "0x2dc0f8cb2c43841072a922cfb44332adc71d898d63d3237ad82988cc1b50577e",
-			"urls": [
-				"bzz-raw://317d1b9fb846e409f6f41d540529bf3c328e3323c3a1b4750630d3a39ca1c182",
-				"dweb:/ipfs/QmYWzDwKEMonYm3xMobGY8eU2dWFzDtCgAbYksZ9L4GQ3K"
-			]
-		},
-		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
+		"contracts/test.sol": {
 			"keccak256": "0xff9d5f742cefc0bb0d4b13b006c4d032bb24a5c1f7ce7031823230d0267dc0cd",
 			"urls": [
 				"bzz-raw://ace1c4590fabf3063db1662746726d3d2c7d39a0df03267f3a9bd1e12100594f",
 				"dweb:/ipfs/QmduV224JB2TXqrFcJbjyy4bsH5PY3jFHzYV8bSJSUzceL"
-			]
-		},
-		"tests/testing.sol": {
-			"keccak256": "0xa1de9d81938d510eb58c6a66343b28943bf0bbd2e891968854d093138851b4b1",
-			"urls": [
-				"bzz-raw://52702cf3518ff789603efb2670e4151ef87df7fe943d3004c2f30ab01ba64878",
-				"dweb:/ipfs/QmXNWHL7tKi9CcZ1JKhqipXJ96y856VBxbwyDpj1dM8CVt"
 			]
 		}
 	},
