@@ -1,7 +1,7 @@
 pragma solidity 0.6.7;
 
 import "./Coin.sol";
-import "./TmpOracleRelayer.sol";
+import "./TmpOracleRelayer.sol"; 
 
 contract WrappedToken is Coin {
     
