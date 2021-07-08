@@ -23,12 +23,14 @@ pragma solidity 0.6.7;
 
 // TO-DO:
 // Posibily update allownaces
-// Add safe multiplication
+// Add safe multiplication AND DIVISION
 // Fix events, specifically making them the wrapped price
 // Fix events in the testing file too ***
 // Make sure balances include the redemption factor in the testing files
 // Add safety for redemption Price = 0 (oracle set bounds maybe?)
 // Withdraw should be for authorized users, not just for src == msg.sender
+// Where to incorp RAY
+// Make all fns in terms of wrapped amt
 // Finish testing
 // Last read over
 
@@ -68,14 +70,16 @@ contract WrappedToken {
     string  public version = "1";
     // The number of decimals that this coin has
     uint8   public constant decimals = 18;
+    
+    // --- Wrapper-Specific Data ---
     // The underlying token
     Coin public immutable underlyingToken;
     // The oracle to be sent to this address
     TmpOracleRelayer public oracleRelayer;
     // Conversion factor for the redemption price.
-    uint public conversionFactor;
+    uint public redemptionPrice;
     // Public constant for RAY
-    uint constant RAY = 10 ** 27;
+    uint public constant RAY = 10 ** 27;
 
     // The id of the chain where this coin was deployed
     uint256 public chainId;
@@ -85,7 +89,7 @@ contract WrappedToken {
     // Mapping of coin balances
     mapping (address => uint256)                      private _balances;
     // Mapping of allowances
-    mapping (address => mapping (address => uint256)) public allowance;
+    mapping (address => mapping (address => uint256)) private _allowances;
     // Mapping of nonces used for permits
     mapping (address => uint256)                      public nonces;
 
@@ -105,6 +109,17 @@ contract WrappedToken {
     function subtract(uint256 x, uint256 y) internal pure returns (uint256 z) {
         require((z = x - y) <= x, "Coin/sub-underflow");
     }
+    function multiply(uint256 x, uint256 y) internal pure returns (uint256 z) {
+        require(y == 0 || (z = x * y) / y == x, "SAFEEngine/multiply-uint-uint-overflow");
+    }
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
 
     // --- EIP712 niceties ---
     bytes32 public DOMAIN_SEPARATOR;
@@ -134,22 +149,55 @@ contract WrappedToken {
         emit AddAuthorization(msg.sender);
     }
     
-    // FUNCTIONS SPECIFIC TO WRAPPED TOKEN
+    // These are the functions specific to the wrapped Token\
     
+    /**
+     * @dev allows the smart contract to mint
+     * tokens to a user's account without any additional steps
+     * 
+     * @param  src The address to which the coins are minted
+     * @param  amt The amount of tokens to be minted to the given address
+     * 
+    **/
     function _mint(address src, uint amt) private {
         _balances[src] = addition(_balances[src], amt);
         totalSupply = addition(totalSupply, amt);
     }
     
+    /**
+     * @dev allows the smart contract to burn
+     * tokens to a user's account without any additional steps
+     * 
+     * @param  src The address in which the coins are burned
+     * @param  amt The amount of tokens to be burned in the given address
+     * 
+    **/
     function _burn(address src, uint amt) private {
         _balances[src] = subtract(_balances[src], amt);
         totalSupply = subtract(totalSupply, amt);
     }
     
+    /**
+     * @dev Retrives the redemption price from the
+     * oracle and updates that price to the redemptionPrice variable
+     * 
+     * Retrieves the current price of Rai
+    **/
     function updateRedemptionPrice() public {
-        conversionFactor = oracleRelayer.redemptionPrice();
+        redemptionPrice = oracleRelayer.redemptionPrice();
     }
 
+    /**
+     * @dev Allows users to deposit the underlying token
+     * in a 1:1 ratio for the wrapped token. The disparity
+     * in price is accounted for in the balanceOf() function.
+     * 
+     * Users deposit the underlying token for the wrapped token
+     * 
+     * @param src                   The address of the depositor
+     * @param amountInUnderlying    The amount of the underlying token being deposited
+     * 
+    **/
     function deposit(address src, uint amountInUnderlying) public  returns (bool) {
         underlyingToken.transferFrom(src, address(this), amountInUnderlying);
         _mint(src, amountInUnderlying);
@@ -158,6 +206,17 @@ contract WrappedToken {
         return true;
     }
 
+    /**
+     * @dev Allows users to withdraw the underlying token
+     * in a 1:1 ratio for the wrapped token. The disparity
+     * in price is accounted for in the balanceOf() function.
+     * 
+     * Users exchange wrapped token for the underlying token
+     * 
+     * @param src                   The address of the depositor
+     * @param wrappedAmount         The amount of wrapped tokens to be exchanged for the underlying token
+     * 
+    **/
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
         require(src == msg.sender);
         
@@ -166,7 +225,7 @@ contract WrappedToken {
         require(balance >= wrappedAmount);
         
         updateRedemptionPrice();
-        uint unwrappedAmount = wrappedAmount / conversionFactor;
+        uint unwrappedAmount = convertToUnderlyingAmount(wrappedAmount);
         _burn(src, wrappedAmount);
         
         underlyingToken.transferFrom(address(this), msg.sender, unwrappedAmount);
@@ -179,8 +238,24 @@ contract WrappedToken {
     function balanceOf(address src) external returns (uint256) {
         updateRedemptionPrice();
         uint unwrappedAmount = _balances[src];
-        return unwrappedAmount * conversionFactor / RAY;
+        return multiply(unwrappedAmount, redemptionPrice) / RAY;
     }
+    
+    function allowance(address owner, address spender) public returns (uint256) {
+        updateRedemptionPrice();
+        return multiply(_allowances[owner][spender], redemptionPrice);
+    }
+    
+    function convertToWrappedAmount(uint underlyingAmount) public returns (uint256) {
+        updateRedemptionPrice();
+        return div(multiply(underlyingAmount, redemptionPrice), RAY, "@WrappedToken/Division Error");
+    }
+    
+    function convertToUnderlyingAmount(uint wrappedAmount) public returns (uint256) {
+        updateRedemptionPrice();
+        return div(multiply(wrappedAmount, RAY), redemptionPrice, "@WrappedToken/Division Error");
+    }
+
 
     // --- Token ---
     /*
@@ -188,8 +263,8 @@ contract WrappedToken {
     * @param dst The address to transfer coins to
     * @param amount The amount of coins to transfer
     */
-    function transfer(address dst, uint256 amount) external returns (bool) {
-        return transferFrom(msg.sender, dst, amount);
+    function transfer(address dst, uint256 wrappedAmount) external returns (bool) {
+        return transferFrom(msg.sender, dst, wrappedAmount);
     }
     /*
     * @notice Transfer coins from a source address to a destination address (if allowed)
@@ -197,15 +272,16 @@ contract WrappedToken {
     * @param dst The address that will receive the coins
     * @param amount The amount of coins to transfer
     */
-    function transferFrom(address src, address dst, uint256 amount)
+    function transferFrom(address src, address dst, uint256 wrappedAmount)
         public returns (bool)
     {
+        uint amount = convertToUnderlyingAmount(wrappedAmount);
         require(dst != address(0), "Coin/null-dst");
         require(dst != address(this), "Coin/dst-cannot-be-this-contract");
         require(_balances[src] >= amount, "Coin/insufficient-balance");
-        if (src != msg.sender && allowance[src][msg.sender] != uint256(-1)) {
-            require(allowance[src][msg.sender] >= amount, "Coin/insufficient-allowance");
-            allowance[src][msg.sender] = subtract(allowance[src][msg.sender], amount);
+        if (src != msg.sender && allowance(src, msg.sender) != uint256(-1)) {
+            require(allowance(src, msg.sender) >= amount, "Coin/insufficient-allowance");
+            _allowances[src][msg.sender] = subtract(_allowances[src][msg.sender], amount);
         }
         _balances[src] = subtract(_balances[src], amount);
         _balances[dst] = addition(_balances[dst], amount);
@@ -217,7 +293,8 @@ contract WrappedToken {
     * @param usr The address for which to mint coins
     * @param amount The amount of coins to mint
     */
-    function mint(address usr, uint256 amount) external isAuthorized {
+    function mint(address usr, uint256 wrappedAmount) external isAuthorized {
+        uint amount = convertToUnderlyingAmount(wrappedAmount);
         _balances[usr] = addition(_balances[usr], amount);
         totalSupply    = addition(totalSupply, amount);
         emit Transfer(address(0), usr, amount);
@@ -227,24 +304,26 @@ contract WrappedToken {
     * @param usr The address that will have its coins burned
     * @param amount The amount of coins to burn
     */
-    function burn(address usr, uint256 amount) external {
+    function burn(address usr, uint256 wrappedAmount) external {
+        uint amount = convertToUnderlyingAmount(wrappedAmount);
         require(_balances[usr] >= amount, "Coin/insufficient-balance");
-        if (usr != msg.sender && allowance[usr][msg.sender] != uint256(-1)) {
-            require(allowance[usr][msg.sender] >= amount, "Coin/insufficient-allowance");
-            allowance[usr][msg.sender] = subtract(allowance[usr][msg.sender], amount);
+        if (usr != msg.sender && allowance(usr, msg.sender) != uint256(-1)) {
+            require(allowance(usr, msg.sender) >= amount, "Coin/insufficient-allowance");
+            _allowances[usr][msg.sender] = subtract(_allowances[usr][msg.sender], amount);
         }
         _balances[usr] = subtract(_balances[usr], amount);
         totalSupply    = subtract(totalSupply, amount);
-        emit Transfer(usr, address(0), amount);
+        emit Transfer(usr, address(0), wrappedAmount);
     }
     /*
     * @notice Change the transfer/burn allowance that another address has on your behalf
     * @param usr The address whose allowance is changed
     * @param amount The new total allowance for the usr
     */
-    function approve(address usr, uint256 amount) external returns (bool) {
-        allowance[msg.sender][usr] = amount;
-        emit Approval(msg.sender, usr, amount);
+    function approve(address usr, uint256 wrappedAmount) external returns (bool) {
+        uint amount = convertToUnderlyingAmount(wrappedAmount);
+        _allowances[msg.sender][usr] = amount;
+        emit Approval(msg.sender, usr, wrappedAmount);
         return true;
     }
 
@@ -254,16 +333,16 @@ contract WrappedToken {
     * @param usr The address to send tokens to
     * @param amount The amount of coins to send
     */
-    function push(address usr, uint256 amount) external {
-        transferFrom(msg.sender, usr, amount);
+    function push(address usr, uint256 wrappedAmount) external {
+        transferFrom(msg.sender, usr, wrappedAmount);
     }
     /*
     * @notice Transfer coins from another address to your address
     * @param usr The address to take coins from
     * @param amount The amount of coins to take from the usr
     */
-    function pull(address usr, uint256 amount) external {
-        transferFrom(usr, msg.sender, amount);
+    function pull(address usr, uint256 wrappedAmount) external {
+        transferFrom(usr, msg.sender, wrappedAmount);
     }
     /*
     * @notice Transfer coins from another address to a destination address (if allowed)
@@ -271,8 +350,8 @@ contract WrappedToken {
     * @param dst The address to transfer coins to
     * @param amount The amount of coins to transfer
     */
-    function move(address src, address dst, uint256 amount) external {
-        transferFrom(src, dst, amount);
+    function move(address src, address dst, uint256 wrappedAmount) external {
+        transferFrom(src, dst, wrappedAmount);
     }
 
     // --- Approve by signature ---
@@ -307,7 +386,7 @@ contract WrappedToken {
         require(expiry == 0 || now <= expiry, "Coin/permit-expired");
         require(nonce == nonces[holder]++, "Coin/invalid-nonce");
         uint256 wad = allowed ? uint256(-1) : 0;
-        allowance[holder][spender] = wad;
+        _allowances[holder][spender] = wad;
         emit Approval(holder, spender, wad);
     }
 }

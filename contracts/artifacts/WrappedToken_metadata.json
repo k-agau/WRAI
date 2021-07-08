@@ -177,6 +177,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "RAY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -193,12 +206,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "owner",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "spender",
 						"type": "address"
 					}
 				],
@@ -210,7 +223,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -222,7 +235,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -284,7 +297,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -307,8 +320,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "conversionFactor",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "wrappedAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "convertToUnderlyingAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -316,7 +335,26 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "underlyingAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "convertToWrappedAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -365,7 +403,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -388,7 +426,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -499,7 +537,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -517,13 +555,26 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
 				"name": "push",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "redemptionPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -574,7 +625,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -603,7 +654,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "amount",
+						"name": "wrappedAmount",
 						"type": "uint256"
 					}
 				],
@@ -683,9 +734,26 @@
 						"account": "Account to add auth to"
 					}
 				},
+				"deposit(address,uint256)": {
+					"details": "Allows users to deposit the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. \r Users deposit the underlying token for the wrapped token \r",
+					"params": {
+						"amountInUnderlying": "The amount of the underlying token being deposited \r*",
+						"src": "The address of the depositor"
+					}
+				},
 				"removeAuthorization(address)": {
 					"params": {
 						"account": "Account to remove auth from"
+					}
+				},
+				"updateRedemptionPrice()": {
+					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variable \r Retrieves the current price of Rai*"
+				},
+				"withdraw(address,uint256)": {
+					"details": "Allows users to withdraw the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. \r Users exchange wrapped token for the underlying token \r",
+					"params": {
+						"src": "The address of the depositor",
+						"wrappedAmount": "The amount of wrapped tokens to be exchanged for the underlying token \r*"
 					}
 				}
 			}
@@ -732,10 +800,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0xc48210c0ceec85ff8008451d5764e228e71937e07f6bcd8d0e0c41a10924b544",
+			"keccak256": "0x912be5d7ce946b46822a05310bd86ce17b7240f025cc09c5d0be7c5b6d770783",
 			"urls": [
-				"bzz-raw://db5dc947b3a97c0aa67f2fece78796c94b097126cca4a3de4b4542517c236ed4",
-				"dweb:/ipfs/Qmc9bdNXWZkgCuG2UXMq9NaQ1pfw1cvmAFG8dbtL773DSL"
+				"bzz-raw://f3a16f620838834db98909779e614e39d65141fe18b64ca9b07ff3de003bfbbd",
+				"dweb:/ipfs/QmRKxn34e2RHgyU5hAJrWvmzvSYfbUXr6LbXay5kQtQ3hE"
 			]
 		}
 	},
