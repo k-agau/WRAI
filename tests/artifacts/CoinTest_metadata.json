@@ -583,17 +583,17 @@
 			]
 		},
 		"/contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0xcb2ebf34f6077f641725e8fb68eb72e58ac8cfd1a1753bac72ccf36fc54f6ffc",
+			"keccak256": "0x4d6380f9564255769b4625fe5c06b6e849f4132704b579d3d65eadeecbd2b43e",
 			"urls": [
-				"bzz-raw://a4ad87de1e801bd1f20f8754044b44034ed7e13a1ab5fd5d75940f2171a94cca",
-				"dweb:/ipfs/QmP3MEdMfHdAA2Tds3s7fSQwBTwxjYHzHtiViHbsrjTFYE"
+				"bzz-raw://53d96952243cab355e1d8bfd6087134682d667bc3e80b6c42032bf4321a9282b",
+				"dweb:/ipfs/QmPc572HyYtDpbKL1ZwVjcmPhRwqVq5jK4rPqZ5CjDPezQ"
 			]
 		},
 		"/contracts/WrappedToken.sol": {
-			"keccak256": "0xd00c2726618bb110341b260274d2515934be10ef30ea28edca523d16fbdc5885",
+			"keccak256": "0xd3d068d68437420e6df630ba778475a010fab062c3837574d5687a51e7a94daa",
 			"urls": [
-				"bzz-raw://8aaecc80ea0455c91785cf8dc6c67ed51b4d1119232c948563581ab7abdc6990",
-				"dweb:/ipfs/QmevG1KVu1qvUQQxTt7RhwZbnVjBHV9a9wqPhs1L7CXkNN"
+				"bzz-raw://4433548b5cf420fea25479fa8698fe1ef89543921935a8e15e671d9f5fc43784",
+				"dweb:/ipfs/QmWHkfhxA4mFd61EKy25DYAcg2gQbqCGnt65KjcKN13tyi"
 			]
 		},
 		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
@@ -604,10 +604,10 @@
 			]
 		},
 		"tests/testing.sol": {
-			"keccak256": "0x018677dd285d7042dde8f7be601b7de97f03ab4f33121f120d74fe4ab8da8951",
+			"keccak256": "0xedafc65971bde4ed0dfa92114781651cb7ece1ed1b678107597b5807224140cb",
 			"urls": [
-				"bzz-raw://d12d32a9098e21613f421aac76d645fe038b66022f7901ae93f18fc9b00f671f",
-				"dweb:/ipfs/QmT1PxK1SWVyC7d1ctTpbXBE2mA3yYHKy8FZxFHg1BnWWP"
+				"bzz-raw://f56b0a6f546f814634ac013a1154cf1bd9b7d3e4227abdee411c6e5a7848e513",
+				"dweb:/ipfs/QmXWBgrkFhDnUJvxDHjyBihcx3YFa5G6bMrd7faZmrRsQs"
 			]
 		}
 	},

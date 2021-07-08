@@ -138,7 +138,7 @@ contract CoinTest is DSTest {
 //    Feed    goldFeed;
 
     
-    WrappedToken            token;
+    WrappedToken            wrappedToken;
     Coin                    underlyingToken;
     TmpOracleRelayer        oracleRelayer;
     
@@ -148,6 +148,8 @@ contract CoinTest is DSTest {
     address user2;
     address user3;
     address self;
+    
+    uint setRedemption;
 
     uint amount = 2;
     uint fee = 1;
@@ -174,9 +176,22 @@ contract CoinTest is DSTest {
         hevm = Hevm(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
         hevm.warp(604411200);
         
-        user1 = address(new WrappedTokenUser(token));
-        user2 = address(new WrappedTokenUser(token));
-        user3 = address(new WrappedTokenUser(token));
+        //underlyingToken = Coin(underlyingTokenAddress);
+        //oracleRelayer = TmpOracleRelayer(oracleAddress);
+        //wrappedToken = WrappedToken(wrappedTokenAddress);
+        
+        user1 = address(new WrappedTokenUser(wrappedToken));
+        user2 = address(new WrappedTokenUser(wrappedToken));
+        user3 = address(new WrappedTokenUser(wrappedToken));
+        self = address(this);
+        
+        setRedemption = 3;
+        
+        underlyingToken.mint(self, initialBalanceThis);
+        underlyingToken.mint(cal, initialBalanceThis);
+        wrappedToken.mint(self, initialBalanceThis);
+        wrappedToken.mint(cal, initialBalanceThis);
+        
 /*
         safeEngine = new SAFEEngine();
         oracleRelayer = new TmpOracleRelayer(address(safeEngine));
@@ -231,48 +246,56 @@ contract CoinTest is DSTest {
         (uint lockedCollateral_, uint generatedDebt_) = safeEngine.safes(collateralType, urn); lockedCollateral_;
         return generatedDebt_;
     }
-*/
     function createToken() internal returns (Coin) {
         return new Coin("Rai", "RAI", 99);
     }
-
+*/
     function testSetup() public {
         assertEq(oracleRelayer.redemptionPrice(), 10 ** 27);
-        assertEq(token.balanceOf(self), initialBalanceThis);
-        assertEq(token.balanceOf(cal), initialBalanceCal);
-        assertEq(token.chainId(), 99);
-        assertEq(keccak256(abi.encodePacked(token.version())), keccak256(abi.encodePacked("1")));
-        token.mint(self, 0);
+        assertEq(underlyingToken.balanceOf(self), initialBalanceThis);
+        assertEq(underlyingToken.balanceOf(cal), initialBalanceCal);
+        assertEq(underlyingToken.chainId(), 99);
+        assertEq(keccak256(abi.encodePacked(underlyingToken.version())), keccak256(abi.encodePacked("1")));
+        underlyingToken.mint(self, 0);
+        
+        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption);
+        assertEq(wrappedToken.balanceOf(cal), initialBalanceCal*setRedemption);
+        assertEq(wrappedToken.chainId(), 99);
+        assertEq(keccak256(abi.encodePacked(underlyingToken.version())), keccak256(abi.encodePacked("1")));
+        underlyingToken.mint(self, 0);
+        
 //        (,,uint safetyPrice,,,) = safeEngine.collateralTypes("gold");
 //        assertEq(safetyPrice, ray(1 ether));
+
     }
     function testSetupPrecondition() public {
-        assertEq(token.balanceOf(self), initialBalanceThis);
+        assertEq(underlyingToken.balanceOf(self), initialBalanceThis);
+        assertEq(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption);
     }
     function testTransferCost() public logs_gas {
-        token.transfer(address(1), 10);
+        wrappedToken.transfer(address(1), 10);
     }
     function testFailTransferToZero() public logs_gas {
-        token.transfer(address(0), 1);
+        wrappedToken.transfer(address(0), 1);
     }
     function testAllowanceStartsAtZero() public logs_gas {
-        assertEq(token.allowance(user1, user2), 0);
+        assertEq(wrappedToken.allowance(user1, user2), 0);
     }
     function testValidTransfers() public logs_gas {
         uint sentAmount = 250;
-        emit log_named_address("token11111", address(token));
-        token.transfer(user2, sentAmount);
-        assertEq(token.balanceOf(user2), sentAmount);
-        assertEq(token.balanceOf(self), initialBalanceThis - sentAmount);
+        emit log_named_address("token11111", address(wrappedToken));
+        wrappedToken.transfer(user2, sentAmount);
+        assertEq(wrappedToken.balanceOf(user2), sentAmount*setRedemption);
+        assertEq(wrappedToken.balanceOf(self), initialBalanceThis - sentAmount);
     }
     function testFailWrongAccountTransfers() public logs_gas {
         uint sentAmount = 250;
-        token.transferFrom(user2, self, sentAmount);
+        wrappedToken.transferFrom(user2, self, sentAmount);
     }
     function testFailInsufficientFundsTransfers() public logs_gas {
         uint sentAmount = 250;
-        token.transfer(user1, initialBalanceThis - sentAmount);
-        token.transfer(user2, sentAmount + 1);
+        wrappedToken.transfer(user1, initialBalanceThis - sentAmount);
+        wrappedToken.transfer(user2, sentAmount + 1);
     }
     function testApproveSetsAllowance() public logs_gas {
         emit log_named_address("Test", self);

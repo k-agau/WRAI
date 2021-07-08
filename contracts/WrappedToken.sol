@@ -21,6 +21,15 @@ import "./TmpOracleRelayer.sol";
 
 pragma solidity 0.6.7;
 
+// TO-DO:
+// Posibily update allownaces
+// Add safe multiplication
+// Fix events, specifically making them the wrapped price
+// Finish testing
+// Last read over
+
+
+
 contract WrappedToken {
     // --- Auth ---
     mapping (address => uint256) public authorizedAccounts;
@@ -64,7 +73,7 @@ contract WrappedToken {
     // Conversion factor for the redemption price.
     uint public conversionFactor;
     // Public constant for RAY
-    uint constant RAD = 10 ** 27;
+    uint constant RAY = 10 ** 27;
 
     // The id of the chain where this coin was deployed
     uint256 public chainId;
@@ -168,7 +177,7 @@ contract WrappedToken {
     function balanceOf(address src) external returns (uint256) {
         updateRedemptionPrice();
         uint unwrappedAmount = _balances[src];
-        return unwrappedAmount * conversionFactor / RAD;
+        return unwrappedAmount * conversionFactor / RAY;
     }
 
     // --- Token ---
