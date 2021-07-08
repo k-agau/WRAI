@@ -308,6 +308,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "conversionFactor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
@@ -411,6 +424,19 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "oracleRelayer",
+				"outputs": [
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -594,6 +620,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "underlyingToken",
+				"outputs": [
+					{
+						"internalType": "contract Coin",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "updateRedemptionPrice",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -693,10 +732,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0x6f97f38c68a7088f805d003728f02d3d3adf099f2ca9221b4a89af31904feeaf",
+			"keccak256": "0xd00c2726618bb110341b260274d2515934be10ef30ea28edca523d16fbdc5885",
 			"urls": [
-				"bzz-raw://f22a571cf9845e45584174d9bde9ae2243e134279cda330a4b314dc2da1c280b",
-				"dweb:/ipfs/QmXTLQnVRHbNFdyPa899Dx96qZw8ug4zKJcPVBYQo4nB4i"
+				"bzz-raw://8aaecc80ea0455c91785cf8dc6c67ed51b4d1119232c948563581ab7abdc6990",
+				"dweb:/ipfs/QmevG1KVu1qvUQQxTt7RhwZbnVjBHV9a9wqPhs1L7CXkNN"
 			]
 		}
 	},

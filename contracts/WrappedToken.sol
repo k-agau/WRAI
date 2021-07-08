@@ -58,13 +58,13 @@ contract WrappedToken {
     // The number of decimals that this coin has
     uint8   public constant decimals = 18;
     // The underlying token
-    Coin underlyingToken;
+    Coin public immutable underlyingToken;
     // The oracle to be sent to this address
-    TmpOracleRelayer oracleRelayer;
+    TmpOracleRelayer public oracleRelayer;
     // Conversion factor for the redemption price.
-    uint conversionFactor;
+    uint public conversionFactor;
     // Public constant for RAY
-    uint constant RAY = 10 ** 27;
+    uint constant RAD = 10 ** 27;
 
     // The id of the chain where this coin was deployed
     uint256 public chainId;
@@ -168,7 +168,7 @@ contract WrappedToken {
     function balanceOf(address src) external returns (uint256) {
         updateRedemptionPrice();
         uint unwrappedAmount = _balances[src];
-        return unwrappedAmount * conversionFactor / RAY;
+        return unwrappedAmount * conversionFactor / RAD;
     }
 
     // --- Token ---
