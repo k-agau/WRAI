@@ -9,12 +9,38 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "tmpPrice",
+						"name": "_val",
 						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "RAY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "_redemptionPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -26,7 +52,20 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "val_",
+						"type": "uint256"
+					}
+				],
+				"name": "updateRedemptionPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -54,10 +93,10 @@
 	},
 	"sources": {
 		"contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0x74114992c2957a8a3668ac86a52a0fde18afda4cee5e4eb4aa1e865cad1b08e9",
+			"keccak256": "0xe8fbff7700f2f8780eed11198cc52c31b2528d5970915f03f682cfdebc298f5f",
 			"urls": [
-				"bzz-raw://b4832938f14c800adeaef2628ea92f9b360054cbe894312cf60285171337cc67",
-				"dweb:/ipfs/QmaERDKeiNS8zAmuLwx1StNXS8vdNFkyvp8Zrw9RzKeQXP"
+				"bzz-raw://f6b28affc07bb1223b0f29a0b95f2a56396a9d9701927f6f8107c4770f74a094",
+				"dweb:/ipfs/QmZnk69PGwuyw5yGrTejMbVJmctAPKC8j2Ec7H3Mb19QrC"
 			]
 		}
 	},

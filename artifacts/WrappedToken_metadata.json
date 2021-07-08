@@ -8,18 +8,28 @@
 			{
 				"inputs": [
 					{
+						"internalType": "contract Coin",
+						"name": "_underlyingToken",
+						"type": "address"
+					},
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "_tmpOracle",
+						"type": "address"
+					},
+					{
 						"internalType": "string",
-						"name": "name_",
+						"name": "name",
 						"type": "string"
 					},
 					{
 						"internalType": "string",
-						"name": "symbol_",
+						"name": "symbol",
 						"type": "string"
 					},
 					{
 						"internalType": "uint256",
-						"name": "chainId_",
+						"name": "_chainId",
 						"type": "uint256"
 					}
 				],
@@ -70,6 +80,25 @@
 					{
 						"indexed": false,
 						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountInUnderlying",
+						"type": "uint256"
+					}
+				],
+				"name": "Deposit",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
 						"name": "account",
 						"type": "address"
 					}
@@ -100,6 +129,25 @@
 					}
 				],
 				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountInUnderlying",
+						"type": "uint256"
+					}
+				],
+				"name": "Withdraw",
 				"type": "event"
 			},
 			{
@@ -212,6 +260,25 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					}
+				],
+				"name": "balance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -260,12 +327,62 @@
 			},
 			{
 				"inputs": [],
+				"name": "conversionFactor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
 						"internalType": "uint8",
 						"name": "",
 						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountInUnderlying",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "divisor",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -456,6 +573,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "tmpOracle",
+				"outputs": [
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "totalSupply",
 				"outputs": [
 					{
@@ -522,6 +652,26 @@
 			},
 			{
 				"inputs": [],
+				"name": "underlyingToken",
+				"outputs": [
+					{
+						"internalType": "contract Coin",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "updateRedemptionPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "version",
 				"outputs": [
 					{
@@ -531,6 +681,30 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "src",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "wrappedAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -545,6 +719,9 @@
 					"params": {
 						"account": "Account to remove auth from"
 					}
+				},
+				"updateRedemptionPrice()": {
+					"details": "Uses the Oracle to update the redemption price"
 				}
 			}
 		},
@@ -553,15 +730,24 @@
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
 				},
+				"balance(address)": {
+					"notice": "Returns the balance of the wrapped token by converting the price of 1 underlying token to x amount of wrapped, each of which is equivalent to 1 USD*"
+				},
+				"deposit(address,uint256)": {
+					"notice": "Allows users to deposit Rai in exchange for the wrapped Token, which will be minted into their accounts upon confirmation of the deposit in a 1:1 ratio.*"
+				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
+				},
+				"withdraw(address,uint256)": {
+					"notice": "Allows users to withdraw their underlying token from the contract and exchange the wrapped token at the current rate*"
 				}
 			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/Coin.sol": "Coin"
+			"src/WrappedToken.sol": "WrappedToken"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -575,11 +761,25 @@
 		"remappings": []
 	},
 	"sources": {
-		"src/Coin.sol": {
-			"keccak256": "0x49da3e9d625fc5867f234839d13a2c6506d509eab262b3fdbce4c077254733c3",
+		"/contracts/TmpOracleRelayer.sol": {
+			"keccak256": "0xcb2ebf34f6077f641725e8fb68eb72e58ac8cfd1a1753bac72ccf36fc54f6ffc",
 			"urls": [
-				"bzz-raw://9f588b96fdef69cc1a8daa8cbdef37e95a5d3452bbd49b1993fa5f2723703571",
-				"dweb:/ipfs/QmS9oyTag1quUPCAHx5tSEctamAbKotCkSZo9YVmuesvoh"
+				"bzz-raw://a4ad87de1e801bd1f20f8754044b44034ed7e13a1ab5fd5d75940f2171a94cca",
+				"dweb:/ipfs/QmP3MEdMfHdAA2Tds3s7fSQwBTwxjYHzHtiViHbsrjTFYE"
+			]
+		},
+		"/src/Coin.sol": {
+			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
+			"urls": [
+				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
+				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
+			]
+		},
+		"src/WrappedToken.sol": {
+			"keccak256": "0x1d1f9bb1d932419d577a00769925673a444e8f932ab1ab8a6eed2dc59aa6237f",
+			"urls": [
+				"bzz-raw://1aebed486caa1629b3902156f1eded77a2015b0c6c7b6b3964aa91f0e2b27370",
+				"dweb:/ipfs/Qme1iQtECoGccFmCL1BFERtTd6WBtqiLo8fyHVENJcyx7V"
 			]
 		}
 	},

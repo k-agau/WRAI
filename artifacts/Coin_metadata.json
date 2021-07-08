@@ -8,28 +8,18 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_underlyingToken",
-						"type": "address"
-					},
-					{
-						"internalType": "contract TmpOracleRelayer",
-						"name": "_tmpOracle",
-						"type": "address"
-					},
-					{
 						"internalType": "string",
-						"name": "name",
+						"name": "name_",
 						"type": "string"
 					},
 					{
 						"internalType": "string",
-						"name": "symbol",
+						"name": "symbol_",
 						"type": "string"
 					},
 					{
 						"internalType": "uint256",
-						"name": "_chainId",
+						"name": "chainId_",
 						"type": "uint256"
 					}
 				],
@@ -80,25 +70,6 @@
 					{
 						"indexed": false,
 						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountInUnderlying",
-						"type": "uint256"
-					}
-				],
-				"name": "Deposit",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
 						"name": "account",
 						"type": "address"
 					}
@@ -129,25 +100,6 @@
 					}
 				],
 				"name": "Transfer",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountInUnderlying",
-						"type": "uint256"
-					}
-				],
-				"name": "Withdraw",
 				"type": "event"
 			},
 			{
@@ -260,25 +212,6 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					}
-				],
-				"name": "balance",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -327,19 +260,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "conversionFactor",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "decimals",
 				"outputs": [
 					{
@@ -349,30 +269,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amountInUnderlying",
-						"type": "uint256"
-					}
-				],
-				"name": "deposit",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -560,32 +456,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "tmpOracle",
-				"outputs": [
-					{
-						"internalType": "contract TmpOracleRelayer",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "token",
-				"outputs": [
-					{
-						"internalType": "contract Coin",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "totalSupply",
 				"outputs": [
 					{
@@ -652,26 +522,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "underlyingToken",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "updateRedemptionPrice",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "version",
 				"outputs": [
 					{
@@ -681,24 +531,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "wrappedAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "withdraw",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -713,9 +545,6 @@
 					"params": {
 						"account": "Account to remove auth from"
 					}
-				},
-				"updateRedemptionPrice()": {
-					"details": "Uses the Oracle to update the redemption price"
 				}
 			}
 		},
@@ -723,9 +552,6 @@
 			"methods": {
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
-				},
-				"deposit(address,uint256)": {
-					"notice": "Allows users to deposit Rai in exchange for the wrapped Token, which will be minted into their accounts upon confirmation of the deposit in a 1:1 ratio.*"
 				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
@@ -735,7 +561,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/WRAI.sol": "WRAI"
+			"src/Coin.sol": "Coin"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -749,25 +575,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"/contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0x74114992c2957a8a3668ac86a52a0fde18afda4cee5e4eb4aa1e865cad1b08e9",
-			"urls": [
-				"bzz-raw://b4832938f14c800adeaef2628ea92f9b360054cbe894312cf60285171337cc67",
-				"dweb:/ipfs/QmaERDKeiNS8zAmuLwx1StNXS8vdNFkyvp8Zrw9RzKeQXP"
-			]
-		},
-		"/src/Coin.sol": {
+		"src/Coin.sol": {
 			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
 			"urls": [
 				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
-			]
-		},
-		"src/WRAI.sol": {
-			"keccak256": "0x872aa3cbdd050048baea667f6fd3909ff14df5dccbb06ccecc3bffc0d7bdc373",
-			"urls": [
-				"bzz-raw://94b779a8f9ddedeb42d4170f99ac7733ceea452307ef32d5e69320f4d2aa8339",
-				"dweb:/ipfs/QmdUmNbLPTSd2jKy7jNmxSnB5DHRHrxvVzRMVtmrfFnaDd"
 			]
 		}
 	},
