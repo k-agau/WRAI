@@ -11,7 +11,7 @@ import "contracts/WrappedToken.sol";
 import "contracts/TmpOracleRelayer.sol";
 import "contracts/test.sol";
 
-
+// All approve methods were commented out as a result of lack of knowledge in assigning arbitrary gas fees
 contract WrappedTokenTest is DSTest {
     
     uint constant initialBalanceThis = 1000;
@@ -142,15 +142,15 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.approve(user2, 25*setRedemption);
         Assert.equal(wrappedToken.allowance(self, user2), 25*setRedemption, "Allowance Approval");
     }
-/*
+
     function testChargesAmountApproved() public logs_gas {
         uint amountApproved = 20*setRedemption;
-        wrappedToken.approve(remixAcct, amountApproved);
-        bool x = WrappedTokenUser(remixAcct).doTransferFrom(self, remixAcct, amountApproved);
+        wrappedToken.approve(user3, amountApproved);
+        bool x = WrappedTokenUser(user3).doTransferFrom(user3, user1, amountApproved);
         Assert.equal(x, true, "Test success of doTransferFrom");
         Assert.equal(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - amountApproved*setRedemption, "Check if successful");
     }
-    
+/*    
     function testFailTransferWithoutApproval() public logs_gas {
         wrappedToken.transfer(user1, 50);
         wrappedToken.transferFrom(user1, self, 1);
@@ -321,12 +321,13 @@ contract WrappedTokenTest is DSTest {
     
     function testWithdraw() public {
         uint withdrawAmt = 10*setRedemption;
-        uint prevWrappedBalance = wrappedToken.balanceOf(self);
-        uint prevUnderlyingBalance = underlyingToken.balanceOf(self);
-        underlyingToken.approve(address(this), withdrawAmt);
-        wrappedToken.withdraw(self, withdrawAmt);
-        Assert.equal(underlyingToken.balanceOf(self), prevUnderlyingBalance + 500, "Underlying balance");
-        Assert.equal(wrappedToken.balanceOf(self), prevWrappedBalance - withdrawAmt, "Wrapped balance");
+        uint wrappedAmt = 10000;
+        wrappedToken.mint(user3, wrappedAmt);
+        Assert.equal(underlyingToken.balanceOf(user3), 0, "Empty balance");
+        uint prevTotalSupply = wrappedToken.totalSupply();
+        WrappedTokenUser(user3).doWithdraw(user3, withdrawAmt);
+        Assert.equal(underlyingToken.balanceOf(user3), 10, "Underlying balance");
+        Assert.equal(wrappedToken.balanceOf(user3), 99990, "Wrapped balance");
     }
     /*
     function testWithdrawZero() public {
