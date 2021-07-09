@@ -37,7 +37,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -130,6 +130,44 @@
 				],
 				"name": "doBurn",
 				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "wrappedAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "doConvertToUnderlyingAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "underlyingAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "doConvertToWrappedAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -288,7 +326,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"tests/testing.sol": "WrappedTokenUser"
+			"contracts/WrappedTokenUser.sol": "WrappedTokenUser"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -302,39 +340,32 @@
 		"remappings": []
 	},
 	"sources": {
-		"/contracts/Coin.sol": {
+		"contracts/Coin.sol": {
 			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
 			"urls": [
 				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
 			]
 		},
-		"/contracts/TmpOracleRelayer.sol": {
+		"contracts/TmpOracleRelayer.sol": {
 			"keccak256": "0xe8fbff7700f2f8780eed11198cc52c31b2528d5970915f03f682cfdebc298f5f",
 			"urls": [
 				"bzz-raw://f6b28affc07bb1223b0f29a0b95f2a56396a9d9701927f6f8107c4770f74a094",
 				"dweb:/ipfs/QmZnk69PGwuyw5yGrTejMbVJmctAPKC8j2Ec7H3Mb19QrC"
 			]
 		},
-		"/contracts/WrappedToken.sol": {
-			"keccak256": "0xc9f54e3a8a9ad221f7462dedcaa8ccca3d8ce89206d358fb75d3d177b75f4d07",
+		"contracts/WrappedToken.sol": {
+			"keccak256": "0x216964d5aedb55fb0b50332b3ba25f59ce8734c6c5994c0a1aa28dc309174445",
 			"urls": [
-				"bzz-raw://7a989cbaa3be632bb54c0404c578bf56b7dfe417b5426bd6731e9f4f1e674356",
-				"dweb:/ipfs/QmWdTYq9BKtPbqvnJAtbe6c6531SWATTHJwe4djCkwDqpv"
+				"bzz-raw://5bc3d856b681852424851dfcf2ba6ea345f9dd67583af2cc1fec52b654fab367",
+				"dweb:/ipfs/QmZTh1zfkHaw7TsVaX8XRjtnU1doyb8Jq4SyySvTiT26bG"
 			]
 		},
-		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
-			"keccak256": "0xff9d5f742cefc0bb0d4b13b006c4d032bb24a5c1f7ce7031823230d0267dc0cd",
+		"contracts/WrappedTokenUser.sol": {
+			"keccak256": "0x8b3f2c714b6d12c96247bc1a2a2b6be16542891af713d71020dc6159b39c4bd1",
 			"urls": [
-				"bzz-raw://ace1c4590fabf3063db1662746726d3d2c7d39a0df03267f3a9bd1e12100594f",
-				"dweb:/ipfs/QmduV224JB2TXqrFcJbjyy4bsH5PY3jFHzYV8bSJSUzceL"
-			]
-		},
-		"tests/testing.sol": {
-			"keccak256": "0xbaff5df7d5673267d8b0f959f23c00fa16898c55cd4b3d1830e58f0a3d877474",
-			"urls": [
-				"bzz-raw://e602012659b3dd9b3f4d0b11f289569babf08ab2e9034179b8bcaa072b779558",
-				"dweb:/ipfs/QmXzG1sC4mMJ5g3QUgWvHan9bLnTs56zsRdG8rXfmBAmA9"
+				"bzz-raw://4f8e2f62ebee4d4a343ad1ef4d2bfc240f216fcc1404782fa841dde0c326a919",
+				"dweb:/ipfs/QmZPuy9HnrTZp1MH21T9fvu4WWitSXVhtWyPLzKmHerzHa"
 			]
 		}
 	},

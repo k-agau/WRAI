@@ -288,12 +288,71 @@
 			},
 			{
 				"inputs": [],
+				"name": "beforeAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createOracle",
+				"outputs": [
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createUnderlyingToken",
+				"outputs": [
+					{
+						"internalType": "contract Coin",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createWrappedToken",
+				"outputs": [
+					{
+						"internalType": "contract WrappedToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "failed",
 				"outputs": [
 					{
 						"internalType": "bool",
 						"name": "",
 						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "oracleRelayer",
+				"outputs": [
+					{
+						"internalType": "contract TmpOracleRelayer",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -322,20 +381,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "testApproveWillModifyAllowance",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testApproveWillNotModifyAllowance",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "testBalanceOf",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -350,42 +395,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "testBurnAuth",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testBurnGuyAuth",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testBurnGuyWithTrust",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "testBurnself",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testChargesAmountApproved",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testCoinAddress",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -399,6 +409,20 @@
 			},
 			{
 				"inputs": [],
+				"name": "testDepositMoreThanBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testDepositZero",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "testDomain_Separator",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -406,35 +430,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "testFailChargeMoreThanApproved",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "testFailInsufficientFundsTransfers",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testFailMintGuyNoAuth",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testFailPermitWithExpiry",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testFailReplay",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -462,20 +458,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "testFailTransferWithoutApproval",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testFailUntrustedTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "testFailWrongAccountTransfers",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -484,13 +466,6 @@
 			{
 				"inputs": [],
 				"name": "testMintGuy",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testMintGuyAuth",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -532,20 +507,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "testTrustedTransferFrom",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "testTrusting",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "testTypehash",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -571,6 +532,32 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "underlyingToken",
+				"outputs": [
+					{
+						"internalType": "contract Coin",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "wrappedToken",
+				"outputs": [
+					{
+						"internalType": "contract WrappedToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -582,7 +569,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"tests/testing.sol": "CoinTest"
+			"contracts/Copy_WRAI_test.sol": "WrappedTokenTest"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -596,39 +583,53 @@
 		"remappings": []
 	},
 	"sources": {
-		"/contracts/Coin.sol": {
+		"contracts/Coin.sol": {
 			"keccak256": "0x3218f3ca4decbf1275344113513897b3f7e5f8159db5a237c9ca2fba7e843520",
 			"urls": [
 				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
 			]
 		},
-		"/contracts/TmpOracleRelayer.sol": {
+		"contracts/Copy_WRAI_test.sol": {
+			"keccak256": "0xb85d95415cf0be9a83a405c31ed778331aafb535e4d2bbfc0a3b00c783ffe1d2",
+			"urls": [
+				"bzz-raw://b241d1185eb8ab3eecb84edeeec6a3aafd56d8ae52ff92740084f42098226d23",
+				"dweb:/ipfs/QmQKitpPR5DbtFyeR7ExiL7SWvwewZDWk7kFgVo4TvXcYN"
+			]
+		},
+		"contracts/TmpOracleRelayer.sol": {
 			"keccak256": "0xe8fbff7700f2f8780eed11198cc52c31b2528d5970915f03f682cfdebc298f5f",
 			"urls": [
 				"bzz-raw://f6b28affc07bb1223b0f29a0b95f2a56396a9d9701927f6f8107c4770f74a094",
 				"dweb:/ipfs/QmZnk69PGwuyw5yGrTejMbVJmctAPKC8j2Ec7H3Mb19QrC"
 			]
 		},
-		"/contracts/WrappedToken.sol": {
-			"keccak256": "0xc9f54e3a8a9ad221f7462dedcaa8ccca3d8ce89206d358fb75d3d177b75f4d07",
+		"contracts/WrappedToken.sol": {
+			"keccak256": "0x216964d5aedb55fb0b50332b3ba25f59ce8734c6c5994c0a1aa28dc309174445",
 			"urls": [
-				"bzz-raw://7a989cbaa3be632bb54c0404c578bf56b7dfe417b5426bd6731e9f4f1e674356",
-				"dweb:/ipfs/QmWdTYq9BKtPbqvnJAtbe6c6531SWATTHJwe4djCkwDqpv"
+				"bzz-raw://5bc3d856b681852424851dfcf2ba6ea345f9dd67583af2cc1fec52b654fab367",
+				"dweb:/ipfs/QmZTh1zfkHaw7TsVaX8XRjtnU1doyb8Jq4SyySvTiT26bG"
 			]
 		},
-		"https://github.com/dapphub/ds-test/blob/c0b770c04474db28d43ab4b2fdb891bd21887e9e/src/test.sol": {
+		"contracts/WrappedTokenUser.sol": {
+			"keccak256": "0x8b3f2c714b6d12c96247bc1a2a2b6be16542891af713d71020dc6159b39c4bd1",
+			"urls": [
+				"bzz-raw://4f8e2f62ebee4d4a343ad1ef4d2bfc240f216fcc1404782fa841dde0c326a919",
+				"dweb:/ipfs/QmZPuy9HnrTZp1MH21T9fvu4WWitSXVhtWyPLzKmHerzHa"
+			]
+		},
+		"contracts/test.sol": {
 			"keccak256": "0xff9d5f742cefc0bb0d4b13b006c4d032bb24a5c1f7ce7031823230d0267dc0cd",
 			"urls": [
 				"bzz-raw://ace1c4590fabf3063db1662746726d3d2c7d39a0df03267f3a9bd1e12100594f",
 				"dweb:/ipfs/QmduV224JB2TXqrFcJbjyy4bsH5PY3jFHzYV8bSJSUzceL"
 			]
 		},
-		"tests/testing.sol": {
-			"keccak256": "0xbaff5df7d5673267d8b0f959f23c00fa16898c55cd4b3d1830e58f0a3d877474",
+		"remix_tests.sol": {
+			"keccak256": "0xe2783cdc204cba8c72494119339f1d90f9022b15d6c718c668b7f097d8e29787",
 			"urls": [
-				"bzz-raw://e602012659b3dd9b3f4d0b11f289569babf08ab2e9034179b8bcaa072b779558",
-				"dweb:/ipfs/QmXzG1sC4mMJ5g3QUgWvHan9bLnTs56zsRdG8rXfmBAmA9"
+				"bzz-raw://bb6a22e64c7f16bcaab63b1c1a1b269d5be8a6d37bdd9dec1718477ab916b18e",
+				"dweb:/ipfs/QmdkW1tT5iadBvaHMCoskhDGZKnfdg8o1D9CcoQYtdJet7"
 			]
 		}
 	},

@@ -1,0 +1,414 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"görli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"linkReferences": {},
+			"object": "608060405260016000806101000a81548160ff02191690831515021790555034801561002a57600080fd5b5060d2806100396000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c8063ba414fa6146037578063fa7626d4146057575b600080fd5b603d6077565b604051808215151515815260200191505060405180910390f35b605d608a565b604051808215151515815260200191505060405180910390f35b600060019054906101000a900460ff1681565b6000809054906101000a900460ff168156fea26469706673582212209ab00943975ae7a4bf795bbece133ae29011ed86b359f99ac456b16c7db702c064736f6c63430006070033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x1 PUSH1 0x0 DUP1 PUSH2 0x100 EXP DUP2 SLOAD DUP2 PUSH1 0xFF MUL NOT AND SWAP1 DUP4 ISZERO ISZERO MUL OR SWAP1 SSTORE POP CALLVALUE DUP1 ISZERO PUSH2 0x2A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0xD2 DUP1 PUSH2 0x39 PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH1 0x32 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0xBA414FA6 EQ PUSH1 0x37 JUMPI DUP1 PUSH4 0xFA7626D4 EQ PUSH1 0x57 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x3D PUSH1 0x77 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 DUP3 ISZERO ISZERO ISZERO ISZERO DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x5D PUSH1 0x8A JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 DUP3 ISZERO ISZERO ISZERO ISZERO DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x1 SWAP1 SLOAD SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0xFF AND DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 SWAP1 SLOAD SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0xFF AND DUP2 JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 SWAP11 0xB0 MULMOD NUMBER SWAP8 GAS 0xE7 LOG4 0xBF PUSH26 0x5BBECE133AE29011ED86B359F99AC456B16C7DB702C064736F6C PUSH4 0x43000607 STOP CALLER ",
+			"sourceMap": "716:14223:0:-:0;;;1595:4;1573:26;;;;;;;;;;;;;;;;;;;;716:14223;5:9:-1;2:2;;;27:1;24;17:12;2:2;716:14223:0;;;;;;;"
+		},
+		"deployedBytecode": {
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "6080604052348015600f57600080fd5b506004361060325760003560e01c8063ba414fa6146037578063fa7626d4146057575b600080fd5b603d6077565b604051808215151515815260200191505060405180910390f35b605d608a565b604051808215151515815260200191505060405180910390f35b600060019054906101000a900460ff1681565b6000809054906101000a900460ff168156fea26469706673582212209ab00943975ae7a4bf795bbece133ae29011ed86b359f99ac456b16c7db702c064736f6c63430006070033",
+			"opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH1 0x32 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0xBA414FA6 EQ PUSH1 0x37 JUMPI DUP1 PUSH4 0xFA7626D4 EQ PUSH1 0x57 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x3D PUSH1 0x77 JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 DUP3 ISZERO ISZERO ISZERO ISZERO DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x5D PUSH1 0x8A JUMP JUMPDEST PUSH1 0x40 MLOAD DUP1 DUP3 ISZERO ISZERO ISZERO ISZERO DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH1 0x0 PUSH1 0x1 SWAP1 SLOAD SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0xFF AND DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 SWAP1 SLOAD SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0xFF AND DUP2 JUMP INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 SWAP11 0xB0 MULMOD NUMBER SWAP8 GAS 0xE7 LOG4 0xBF PUSH26 0x5BBECE133AE29011ED86B359F99AC456B16C7DB702C064736F6C PUSH4 0x43000607 STOP CALLER ",
+			"sourceMap": "716:14223:0:-:0;;;;5:9:-1;2:2;;;27:1;24;17:12;2:2;716:14223:0;;;;;;;;;;;;;;;;;;;;;12:1:-1;9;2:12;1605:18:0;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1573:26;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1605:18;;;;;;;;;;;;;:::o;1573:26::-;;;;;;;;;;;;;:::o"
+		},
+		"gasEstimates": {
+			"creation": {
+				"codeDepositCost": "42000",
+				"executionCost": "20960",
+				"totalCost": "62960"
+			},
+			"external": {
+				"IS_TEST()": "1053",
+				"failed()": "1081"
+			},
+			"internal": {
+				"assertEq(address,address)": "infinite",
+				"assertEq(address,address,string memory)": "infinite",
+				"assertEq(bytes32,bytes32)": "infinite",
+				"assertEq(bytes32,bytes32,string memory)": "infinite",
+				"assertEq(int256,int256)": "infinite",
+				"assertEq(int256,int256,string memory)": "infinite",
+				"assertEq(string memory,string memory)": "infinite",
+				"assertEq(string memory,string memory,string memory)": "infinite",
+				"assertEq(uint256,uint256)": "infinite",
+				"assertEq(uint256,uint256,string memory)": "infinite",
+				"assertEq0(bytes memory,bytes memory)": "infinite",
+				"assertEq0(bytes memory,bytes memory,string memory)": "infinite",
+				"assertEq32(bytes32,bytes32)": "infinite",
+				"assertEq32(bytes32,bytes32,string memory)": "infinite",
+				"assertEqDecimal(int256,int256,uint256)": "infinite",
+				"assertEqDecimal(int256,int256,uint256,string memory)": "infinite",
+				"assertEqDecimal(uint256,uint256,uint256)": "infinite",
+				"assertEqDecimal(uint256,uint256,uint256,string memory)": "infinite",
+				"assertGe(int256,int256)": "infinite",
+				"assertGe(int256,int256,string memory)": "infinite",
+				"assertGe(uint256,uint256)": "infinite",
+				"assertGe(uint256,uint256,string memory)": "infinite",
+				"assertGeDecimal(int256,int256,uint256)": "infinite",
+				"assertGeDecimal(int256,int256,uint256,string memory)": "infinite",
+				"assertGeDecimal(uint256,uint256,uint256)": "infinite",
+				"assertGeDecimal(uint256,uint256,uint256,string memory)": "infinite",
+				"assertGt(int256,int256)": "infinite",
+				"assertGt(int256,int256,string memory)": "infinite",
+				"assertGt(uint256,uint256)": "infinite",
+				"assertGt(uint256,uint256,string memory)": "infinite",
+				"assertGtDecimal(int256,int256,uint256)": "infinite",
+				"assertGtDecimal(int256,int256,uint256,string memory)": "infinite",
+				"assertGtDecimal(uint256,uint256,uint256)": "infinite",
+				"assertGtDecimal(uint256,uint256,uint256,string memory)": "infinite",
+				"assertLe(int256,int256)": "infinite",
+				"assertLe(int256,int256,string memory)": "infinite",
+				"assertLe(uint256,uint256)": "infinite",
+				"assertLe(uint256,uint256,string memory)": "infinite",
+				"assertLeDecimal(int256,int256,uint256)": "infinite",
+				"assertLeDecimal(int256,int256,uint256,string memory)": "infinite",
+				"assertLeDecimal(uint256,uint256,uint256)": "infinite",
+				"assertLeDecimal(uint256,uint256,uint256,string memory)": "infinite",
+				"assertLt(int256,int256)": "infinite",
+				"assertLt(int256,int256,string memory)": "infinite",
+				"assertLt(uint256,uint256)": "infinite",
+				"assertLt(uint256,uint256,string memory)": "infinite",
+				"assertLtDecimal(int256,int256,uint256)": "infinite",
+				"assertLtDecimal(int256,int256,uint256,string memory)": "infinite",
+				"assertLtDecimal(uint256,uint256,uint256)": "infinite",
+				"assertLtDecimal(uint256,uint256,uint256,string memory)": "infinite",
+				"assertTrue(bool)": "infinite",
+				"assertTrue(bool,string memory)": "infinite",
+				"checkEq0(bytes memory,bytes memory)": "infinite",
+				"fail()": "infinite"
+			}
+		},
+		"methodIdentifiers": {
+			"IS_TEST()": "fa7626d4",
+			"failed()": "ba414fa6"
+		}
+	},
+	"abi": [
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"name": "log",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "log_address",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "",
+					"type": "bytes"
+				}
+			],
+			"name": "log_bytes",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "",
+					"type": "bytes32"
+				}
+			],
+			"name": "log_bytes32",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "int256",
+					"name": "",
+					"type": "int256"
+				}
+			],
+			"name": "log_int",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "val",
+					"type": "address"
+				}
+			],
+			"name": "log_named_address",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "val",
+					"type": "bytes"
+				}
+			],
+			"name": "log_named_bytes",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "bytes32",
+					"name": "val",
+					"type": "bytes32"
+				}
+			],
+			"name": "log_named_bytes32",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "int256",
+					"name": "val",
+					"type": "int256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "decimals",
+					"type": "uint256"
+				}
+			],
+			"name": "log_named_decimal_int",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "val",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "decimals",
+					"type": "uint256"
+				}
+			],
+			"name": "log_named_decimal_uint",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "int256",
+					"name": "val",
+					"type": "int256"
+				}
+			],
+			"name": "log_named_int",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "val",
+					"type": "string"
+				}
+			],
+			"name": "log_named_string",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "val",
+					"type": "uint256"
+				}
+			],
+			"name": "log_named_uint",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"name": "log_string",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "log_uint",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "bytes",
+					"name": "",
+					"type": "bytes"
+				}
+			],
+			"name": "logs",
+			"type": "event"
+		},
+		{
+			"inputs": [],
+			"name": "IS_TEST",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "failed",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}
