@@ -224,53 +224,70 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.burn(user1, burnAmount);
         Assert.equal(wrappedToken.balanceOf(user1), prevUserBalance, "Post burn");
     }
-/*
+
     function testBurnAuth() public {
-        wrappedToken.transfer(user1, 10);
+        uint prevWrappedBalance = wrappedToken.balanceOf(user1);
+        wrappedToken.transfer(user1, 30);
         wrappedToken.addAuthorization(user1);
-        WrappedTokenUser(user1).doBurn(10);
+        WrappedTokenUser(user1).doBurn(30);
+        Assert.equal(wrappedToken.balanceOf(user1), prevWrappedBalance, "No change");
     }
+    
     function testBurnGuyAuth() public {
-        wrappedToken.transfer(user2, 10);
+        uint prevWrappedBalance = wrappedToken.balanceOf(user2);
+        wrappedToken.transfer(user2, 30);
         wrappedToken.addAuthorization(user1);
         WrappedTokenUser(user2).doApprove(user1);
-        WrappedTokenUser(user1).doBurn(user2, 10);
+        WrappedTokenUser(user1).doBurn(user2, 30);
+        Assert.equal(wrappedToken.balanceOf(user2), prevWrappedBalance, "No balance change");
     }
     function testFailUntrustedTransferFrom() public {
-        assertEq(wrappedToken.allowance(self, user2), 0);
+        Assert.equal(wrappedToken.allowance(self, user2), 0, "Check allownace");
         WrappedTokenUser(user1).doTransferFrom(self, user2, 200);
     }
+    // Larger numbers experience minor rounding errors but 
+    // always err on the side of not being able to withdraw more rai than put in
+    // There is also a limit on how much one can allocate an allowance for,
+    // Which is not a problem because their is a logical limit on how much one would ever use
     function testTrusting() public {
-        assertEq(wrappedToken.allowance(self, user2), 0);
-        wrappedToken.approve(user2, uint(-1));
-        assertEq(wrappedToken.allowance(self, user2), uint(-1));
         wrappedToken.approve(user2, 0);
-        assertEq(wrappedToken.allowance(self, user2), 0);
+        Assert.equal(wrappedToken.allowance(self, user2), 0, "No allowance");
+        wrappedToken.approve(user2, 1000000);
+        Assert.equal(wrappedToken.allowance(self, user2), 999999, "Given allowance");
+        wrappedToken.approve(user2, 0);
+        Assert.equal(wrappedToken.allowance(self, user2), 0, "Final allownace");
     }
+    
     function testTrustedTransferFrom() public {
-        wrappedToken.approve(user1, uint(-1));
-        WrappedTokenUser(user1).doTransferFrom(self, user2, 200);
-        assertEq(wrappedToken.balanceOf(user2), 200*setRedemption);
+        uint prevUserBalance = wrappedToken.balanceOf(user2);
+        wrappedToken.approve(user1, 1000000);
+        WrappedTokenUser(user1).doTransferFrom(self, user2, 600);
+        Assert.equal(wrappedToken.balanceOf(user2), prevUserBalance + 600, "After operations");
     }
     function testApproveWillModifyAllowance() public {
-        assertEq(wrappedToken.allowance(self, user1), 0);
-        assertEq(wrappedToken.balanceOf(user1), 0);
-        wrappedToken.approve(user1, 1000);
-        assertEq(wrappedToken.allowance(self, user1), 1000);
-        WrappedTokenUser(user1).doTransferFrom(self, user1, 500);
-        assertEq(wrappedToken.balanceOf(user1), 500*setRedemption);
-        assertEq(wrappedToken.allowance(self, user1), 500);
+        wrappedToken.approve(user1, 0);
+        wrappedToken.burn(user1, 429);
+        wrappedToken.mint(self, 5000);
+        Assert.equal(wrappedToken.allowance(self, user1), 0, "Init allowance check");
+        Assert.equal(wrappedToken.balanceOf(user1), 0, "Init balance check");
+        wrappedToken.approve(user1, 3000);
+        Assert.equal(wrappedToken.allowance(self, user1), 3000, "First allowance");
+        WrappedTokenUser(user1).doTransferFrom(self, user1, 1500);
+        Assert.equal(wrappedToken.balanceOf(user1), 1500, "Final balance check");
+        Assert.equal(wrappedToken.allowance(self, user1), 1500, "Final allowance check");
     }
     function testApproveWillNotModifyAllowance() public {
-        assertEq(wrappedToken.allowance(self, user1), 0);
-        assertEq(wrappedToken.balanceOf(user1), 0);
-        wrappedToken.approve(user1, uint(-1));
-        assertEq(wrappedToken.allowance(self, user1), uint(-1));
+        wrappedToken.approve(user1, 0);
+        wrappedToken.burn(user1, 1500);
+        Assert.equal(wrappedToken.allowance(self, user1), 0, "Init allowance check");
+        Assert.equal(wrappedToken.balanceOf(user1), 0, "Init balance check");
+        wrappedToken.approve(user1, 10000);
+        Assert.equal(wrappedToken.allowance(self, user1), 9999, "Mid allowance check");
         WrappedTokenUser(user1).doTransferFrom(self, user1, 1000);
-        assertEq(wrappedToken.balanceOf(user1), 1000*setRedemption);
-        assertEq(wrappedToken.allowance(self, user1), uint(-1));
+        Assert.equal(wrappedToken.balanceOf(user1), 1000, "Final balance check");
+        Assert.equal(wrappedToken.allowance(self, user1), 9000, "Final allowance");
     }
-    */
+    
     function testTypehash() public {
         Assert.equal(wrappedToken.PERMIT_TYPEHASH(), 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb, "Permit typehash");
     }
@@ -279,12 +296,12 @@ contract WrappedTokenTest is DSTest {
         Assert.equal(wrappedToken.DOMAIN_SEPARATOR(), 0x9685c05f6a00c66a2989a50f30fcbe3c3de111d1b46eae24f24998f456088d0a, "Domain separator");
     }
     
-    /*
+    
     function testFailReplay() public {
         wrappedToken.permit(cal, del, 0, 0, true, v, r, s);
         wrappedToken.permit(cal, del, 0, 0, true, v, r, s);
     }
-    */
+    
     
     // Wrapper specific tests:
     

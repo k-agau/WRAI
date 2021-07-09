@@ -154,16 +154,13 @@ contract WrappedToken {
      * tokens to a user's account without any additional steps
      * 
      * @param  src The address in which the coins are burned
-     * @param  amt The amount of tokens to be burned in the given address
+     * @param  underlyingAmount The amount of underlying tokens to be burned in the given address
      * 
     **/
-    function _burn(address src, uint amt) private {
-        _balances[src] = subtract(_balances[src], amt);
-        _totalSupply = subtract(_totalSupply, amt);
-    }
-    
-    function _updateApprove(address src, uint underlyingAmount) private {
-        _allowances[src][address(this)] = underlyingAmount;
+    function _burn(address src, uint underlyingAmount) private {
+        require(_balances[src] >= underlyingAmount);
+        _balances[src] = subtract(_balances[src], underlyingAmount);
+        _totalSupply = subtract(_totalSupply, underlyingAmount);
     }
     
     /**
@@ -213,10 +210,6 @@ contract WrappedToken {
     **/
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
         require(src == msg.sender);
-        
-        uint balance = balanceOf(src);
-        require(balance >= wrappedAmount);
-        
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
         _burn(src, underlyingAmount);
         underlyingToken.approve(address(underlyingToken), underlyingAmount);
