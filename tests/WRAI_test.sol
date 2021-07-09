@@ -11,7 +11,6 @@ import "contracts/WrappedToken.sol";
 import "contracts/TmpOracleRelayer.sol";
 import "contracts/test.sol";
 
-// All approve methods were commented out as a result of lack of knowledge in assigning arbitrary gas fees
 contract WrappedTokenTest is DSTest {
     
     uint constant initialBalanceThis = 1000;
@@ -305,8 +304,6 @@ contract WrappedTokenTest is DSTest {
     
     
     // Wrapper specific tests:
-    
-    // Transfer all out in users? create new users?
     
     function testUpdateRedemptionPrice() public {
         wrappedToken.updateRedemptionPrice();
