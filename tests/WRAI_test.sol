@@ -144,28 +144,29 @@ contract WrappedTokenTest is DSTest {
     }
 
     function testChargesAmountApproved() public logs_gas {
-        uint amountApproved = 20*setRedemption;
+        uint amountApproved = 60;
+        uint prevWrappedBalance = wrappedToken.balanceOf(self);
         wrappedToken.approve(user3, amountApproved);
-        bool x = WrappedTokenUser(user3).doTransferFrom(user3, user1, amountApproved);
+        bool x = WrappedTokenUser(user3).doTransferFrom(self, user2, amountApproved);
         Assert.equal(x, true, "Test success of doTransferFrom");
-        Assert.equal(wrappedToken.balanceOf(self), initialBalanceThis*setRedemption - amountApproved*setRedemption, "Check if successful");
+        Assert.equal(wrappedToken.balanceOf(self), prevWrappedBalance - amountApproved, "Check if successful");
     }
-/*    
+    
     function testFailTransferWithoutApproval() public logs_gas {
         wrappedToken.transfer(user1, 50);
         wrappedToken.transferFrom(user1, self, 1);
     }
-*/
+
     function testFailTransferToContractItself() public logs_gas {
         wrappedToken.transfer(address(wrappedToken), 1);
     }
-/*
+
     function testFailChargeMoreThanApproved() public logs_gas {
         wrappedToken.transfer(user1, 50);
         WrappedTokenUser(user1).doApprove(self, 20);
         wrappedToken.transferFrom(user1, self, 21);
     }
-*/
+
     function testTransferFromSelf() public {
         uint prevBalance = wrappedToken.balanceOf(user1);
         wrappedToken.transferFrom(self, user1, 50*setRedemption);
@@ -185,10 +186,10 @@ contract WrappedTokenTest is DSTest {
     }
     function testMintGuy() public {
         uint mintAmount = 10*setRedemption;
+        uint prevWrappedBalance = wrappedToken.balanceOf(user1);
         wrappedToken.mint(user1, mintAmount);
-        assertEq(wrappedToken.balanceOf(user1), mintAmount*setRedemption);
+        Assert.equal(wrappedToken.balanceOf(user1), prevWrappedBalance + mintAmount, "Mint for user1");
     }
-    /*
     function testFailMintGuyNoAuth() public {
         WrappedTokenUser(user1).doMint(user2, 10);
     }
@@ -197,9 +198,9 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.addAuthorization(user1);
         WrappedTokenUser(user1).doMint(user2, 10);
     }
-    */
     
     
+/*    
     function testBurn() public {
         uint burnAmount = 10*setRedemption;
         uint tSupply = wrappedToken.totalSupply();
@@ -212,7 +213,6 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.burn(address(this), burnAmount);
         Assert.equal(wrappedToken.balanceOf(self), prevBalance - burnAmount, "Burn self");
     }
-    /*
     function testBurnGuyWithTrust() public {
         uint burnAmount = 10;
         wrappedToken.transfer(user1, burnAmount);

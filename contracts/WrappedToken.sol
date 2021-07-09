@@ -298,8 +298,8 @@ contract WrappedToken {
         require(dst != address(0), "Coin/null-dst");
         require(dst != address(this), "Coin/dst-cannot-be-this-contract");
         require(_balances[src] >= amount, "Coin/insufficient-balance");
-        if (src != msg.sender && allowance(src, msg.sender) != uint256(-1)) {
-            require(allowance(src, msg.sender) >= amount, "Coin/insufficient-allowance");
+        if (src != msg.sender && _allowances[src][msg.sender] != uint256(-1)) {
+            require(_allowances[src][msg.sender] >= amount, "Coin/insufficient-allowance");
             _allowances[src][msg.sender] = subtract(_allowances[src][msg.sender], amount);
         }
         _balances[src] = subtract(_balances[src], amount);
@@ -326,8 +326,8 @@ contract WrappedToken {
     function burn(address usr, uint256 wrappedAmount) external {
         uint amount = convertToUnderlyingAmount(wrappedAmount);
         require(_balances[usr] >= amount, "Coin/insufficient-balance");
-        if (usr != msg.sender && allowance(usr, msg.sender) != uint256(-1)) {
-            require(allowance(usr, msg.sender) >= amount, "Coin/insufficient-allowance");
+        if (usr != msg.sender && _allowances[usr][msg.sender] != uint256(-1)) {
+            require(_allowances[usr][msg.sender] >= amount, "Coin/insufficient-allowance");
             _allowances[usr][msg.sender] = subtract(_allowances[usr][msg.sender], amount);
         }
         _balances[usr] = subtract(_balances[usr], amount);
