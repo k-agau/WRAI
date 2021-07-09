@@ -836,10 +836,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0xf8f522f1f74f32a2ceef0dd2006aecbcec032e83acd9fe10b183728aebd5d2b2",
+			"keccak256": "0x216964d5aedb55fb0b50332b3ba25f59ce8734c6c5994c0a1aa28dc309174445",
 			"urls": [
-				"bzz-raw://c964df76adb5c377bc84d68922b8e5d6da3d90b2d4fc8f20a0076ecd8b658373",
-				"dweb:/ipfs/QmWaT137TLuYGhrv1iqeB7x3eNk8Z6cVducNG97r5WPdVf"
+				"bzz-raw://5bc3d856b681852424851dfcf2ba6ea345f9dd67583af2cc1fec52b654fab367",
+				"dweb:/ipfs/QmZTh1zfkHaw7TsVaX8XRjtnU1doyb8Jq4SyySvTiT26bG"
 			]
 		}
 	},

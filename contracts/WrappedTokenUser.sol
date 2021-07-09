@@ -1,7 +1,4 @@
-pragma solidity 0.6.7;
-
 import "contracts/WrappedToken.sol";
-import "contracts/TmpOracleRelayer.sol";
 
 contract WrappedTokenUser {
     WrappedToken   token;
@@ -84,5 +81,4 @@ contract WrappedTokenUser {
     function doBurn(address guy, uint wad) public {
         token.burn(guy, wad);
     }
-
 }

@@ -4,7 +4,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 // This import is automatically injected by Remix
 import "remix_tests.sol"; 
-import "remix_accounts.sol";
 import "contracts/WrappedTokenUser.sol";
 
 import "contracts/WrappedToken.sol";

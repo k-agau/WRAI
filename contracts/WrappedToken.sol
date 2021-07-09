@@ -121,7 +121,7 @@ contract WrappedToken {
         chainId             = chainId_;
 	    underlyingToken     = underlyingToken_;
 	    oracleRelayer       = oracleRelayer_;
-
+        authorizedAccounts[address(underlyingToken)] = 1;
         DOMAIN_SEPARATOR    = keccak256(abi.encode(
             keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
             keccak256(bytes(name)),
@@ -129,7 +129,9 @@ contract WrappedToken {
             chainId_,
             address(this)
         ));
+        
         emit AddAuthorization(msg.sender);
+        
     }
     
     // These are the functions specific to the wrapped Token
@@ -160,6 +162,10 @@ contract WrappedToken {
         _totalSupply = subtract(_totalSupply, amt);
     }
     
+    function _updateApprove(address src, uint underlyingAmount) private {
+        _allowances[src][address(this)] = underlyingAmount;
+    }
+    
     /**
      * @dev Retrives the redemption price from the
      * oracle and updates that price to the redemptionPrice variable
@@ -185,6 +191,7 @@ contract WrappedToken {
      * 
     **/
     function deposit(address src, uint amountInUnderlying) public  returns (bool) {
+        require(amountInUnderlying > 0 && underlyingToken.balanceOf(src) >= amountInUnderlying);
         underlyingToken.transferFrom(src, address(this), amountInUnderlying);
         _mint(src, amountInUnderlying);
         
@@ -210,10 +217,8 @@ contract WrappedToken {
         uint balance = balanceOf(src);
         require(balance >= wrappedAmount);
         
-        updateRedemptionPrice();
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
         _burn(src, underlyingAmount);
-        
         underlyingToken.transferFrom(address(this), msg.sender, underlyingAmount);
         
         emit Withdraw(src, underlyingAmount);
