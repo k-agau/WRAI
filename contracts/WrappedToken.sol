@@ -165,12 +165,13 @@ contract WrappedToken {
     /**
      * @dev Retrives the redemption price from the
      * oracle and updates that price to the redemptionPrice variable
+     * @dev Uses ray to account for real oracleRelayer
      * 
      * Retrieves the current price of Rai
      * 
     **/
     function updateRedemptionPrice() public {
-        redemptionPrice = oracleRelayer.redemptionPrice();
+        redemptionPrice = oracleRelayer.redemptionPrice() * RAY;
     }
 
     /**
@@ -207,18 +208,16 @@ contract WrappedToken {
      * @param wrappedAmount         The amount of wrapped tokens to be exchanged for the underlying token
      * 
     **/
-    function withdraw(address src, uint wrappedAmount) public returns (bool) {
+    function withdraw(address src, uint wrappedAmount) public returns (uint) {
         require(src == msg.sender);
         require(balanceOf(src) >= wrappedAmount);
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
         require(totalSupply() >= wrappedAmount);
         _burn(src, underlyingAmount);
-        underlyingToken.approve(address(underlyingToken), 100000);
         underlyingToken.transfer(src, underlyingAmount);
-        underlyingToken.approve(src, 0);
         emit Withdraw(src, underlyingAmount);
         
-        return true;
+        return underlyingAmount;
     }
     
     /**

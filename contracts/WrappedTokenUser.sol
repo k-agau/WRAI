@@ -20,7 +20,7 @@ contract WrappedTokenUser {
         return token.deposit(src, underlyingAmount);
     }
     
-    function doWithdraw(address src, uint wrappedAmount) public returns (bool) {
+    function doWithdraw(address src, uint wrappedAmount) public returns (uint) {
         return token.withdraw(src, wrappedAmount);
     }
     

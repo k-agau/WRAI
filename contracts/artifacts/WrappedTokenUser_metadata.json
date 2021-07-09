@@ -332,9 +332,9 @@
 				"name": "doWithdraw",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "bool"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -379,17 +379,17 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0x7660ba2270d982e45b9d8c09ec7f7429d92b74249bc6bdb05ce12333f85a794a",
+			"keccak256": "0xffe30308644ab4982b35de3841a7735f07968d72b28be211f79263482411f75c",
 			"urls": [
-				"bzz-raw://27f1cc9d2f73226adc827335257ec9e61772761ea689de16ee1bc5f2e9c9d15e",
-				"dweb:/ipfs/QmV34zgQVQYQ3in8JtsPkeVBAuxMAyFaqEof4J1yhqgSVt"
+				"bzz-raw://25f5e62542c4528385237d02f35956ffda3131018ac2fe08a6dcbcb755bffd28",
+				"dweb:/ipfs/QmVYBwYfQ1EKejhLGc8tMcqfpzp3kUNrXCwidVa3YVFDhH"
 			]
 		},
 		"contracts/WrappedTokenUser.sol": {
-			"keccak256": "0x2eb1d2b2bd024030c867cb77ba253fee905daceb7a3cf04d7c1e9dea183e385b",
+			"keccak256": "0x7c1a843ed8db9b0a4c1b84309088f76e5791d192b4645e50cb110c9978ce02bb",
 			"urls": [
-				"bzz-raw://7d59665080498ef30798f8378700adbe1c3c538ce9771586fe203b39f04aaf70",
-				"dweb:/ipfs/QmYRbwURTcu4UZa36urqWqY86hJwBTkGgNkaeBADwTFXVz"
+				"bzz-raw://6b924e5e0b94fe2e7ac0c6b23cf69b9a7bd37cf3938eea7e6bae7d3abab60d0e",
+				"dweb:/ipfs/QmQYKoVNCV2FXumz5spCX7AkVzTg5aB8uvSaF1kq51jvw3"
 			]
 		}
 	},

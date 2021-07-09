@@ -268,6 +268,7 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.approve(user1, 0);
         wrappedToken.burn(user1, 429);
         wrappedToken.mint(self, 5000);
+        wrappedToken.burn(user1, 48);
         Assert.equal(wrappedToken.allowance(self, user1), 0, "Init allowance check");
         Assert.equal(wrappedToken.balanceOf(user1), 0, "Init balance check");
         wrappedToken.approve(user1, 3000);
@@ -284,7 +285,7 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.approve(user1, 10000);
         Assert.equal(wrappedToken.allowance(self, user1), 9999, "Mid allowance check");
         WrappedTokenUser(user1).doTransferFrom(self, user1, 1000);
-        Assert.equal(wrappedToken.balanceOf(user1), 1000, "Final balance check");
+        Assert.equal(wrappedToken.balanceOf(user1), 999, "Final balance check");
         Assert.equal(wrappedToken.allowance(self, user1), 9000, "Final allowance");
     }
     
@@ -309,7 +310,7 @@ contract WrappedTokenTest is DSTest {
     
     function testUpdateRedemptionPrice() public {
         wrappedToken.updateRedemptionPrice();
-        Assert.equal(wrappedToken.redemptionPrice(), setRedemption, "Check redemption");
+        Assert.equal(wrappedToken.redemptionPrice(), setRedemption * 10**27, "Check redemption");
     }
     
     function testDeposit() public {
@@ -327,7 +328,7 @@ contract WrappedTokenTest is DSTest {
         Assert.equal(wrappedToken.balanceOf(user3), prevWrappedBalance + wrappedDepositAmt, "Wrapped balance following deposit");
         Assert.equal(underlyingToken.balanceOf(user3), prevUnderlyingBalance - depositAmt, "Underlying balance following deposit");
         // Plus 1 is due to a rounding error
-        Assert.equal(wrappedToken.totalSupply(), prevTotalSupply + wrappedDepositAmt + 1, "Newly minted amount");
+        Assert.equal(wrappedToken.totalSupply(), prevTotalSupply + wrappedDepositAmt, "Newly minted amount");
     }
     
     function testDepositZero() public {
@@ -348,34 +349,38 @@ contract WrappedTokenTest is DSTest {
         wrappedToken.mint(address(wrappedToken), 1000000);
         wrappedToken.mint(user3, 1000);
         underlyingToken.mint(user3, 1000);
-        Assert.equal(wrappedToken.balanceOf(user3), 1000, "Init wrapped balance is 1000");
+        Assert.equal(wrappedToken.balanceOf(user3), 1299, "Init wrapped balance is 1000");
         Assert.equal(underlyingToken.balanceOf(user3), 1000, "Init underlying balance 0");
         uint prevTotalSupply = wrappedToken.totalSupply();
-        WrappedTokenUser(user3).doWithdraw(user3, 300);
         
-        Assert.equal(wrappedToken.balanceOf(user3), 0, "Init wrapped balance 0");
+        uint wrappedDepositAmt = wrappedToken.convertToWrappedAmount(100);
+        Assert.equal(wrappedDepositAmt, 300, "Wrapped amount");
+        
+        uint tmp = WrappedTokenUser(user3).doWithdraw(user3, wrappedDepositAmt);
+        Assert.equal(tmp, 100, "Underlying amount returned after withdraw");
+        Assert.equal(wrappedToken.balanceOf(user3), 999, "Post withdraw wrapped balance");
         Assert.equal(wrappedToken.totalSupply(), prevTotalSupply - 300, "New total supply");
-        Assert.equal(underlyingToken.balanceOf(user3), wrappedToken.convertToUnderlyingAmount(300), "New underlying balance");
-        
-        
+        Assert.equal(underlyingToken.balanceOf(user3), 1000 + wrappedToken.convertToUnderlyingAmount(300), "New underlying balance");
     }
-    /*
+    
     function testWithdrawZero() public {
-        uint prevWrappedBalance = wrappedToken.balanceOf(self);
-        uint prevUnderlyingBalance = underlyingToken.balanceOf(self);
-        wrappedToken.withdraw(self, 0);
-        assertEq(underlyingToken.balanceOf(self), underlyingBalance, "Withdraw 0 underlying");
-        assertEq(wrappedToken.balanceOf(self), wrappedBalance, "Withdraw 0 wrapped");
+        uint prevWrappedBalance = wrappedToken.balanceOf(user3);
+        uint prevUnderlyingBalance = underlyingToken.balanceOf(user3);
+        WrappedTokenUser(user3).doWithdraw(user3, 0);
+        Assert.equal(underlyingToken.balanceOf(user3), prevUnderlyingBalance, "Withdraw 0 underlying");
+        Assert.equal(wrappedToken.balanceOf(user3), prevWrappedBalance, "Withdraw 0 wrapped");
     } 
     
     function testWithdrawMoreThanBalance() public {
-        wrappedToken.withdraw(user2, 10000);
-        assertEq(underlyingToken.balanceOf(user2), 550);
-        assertEq(wrappedToken.balanceOf(user2), wrappedToken.convertToWrappedAmount(500));
+        WrappedTokenUser(user3).doWithdraw(user3, 1000000);
     }
-    */
+    
+    function testNoTrustedCanWithdraw() public {
+        WrappedTokenUser(user3).doApprove(self, 10000000);
+        wrappedToken.withdraw(user3, 100);
+    }
     
     function testBalanceOf() public {
-        Assert.equal(wrappedToken.balanceOf(user2), 1500, "Expected balance");
+        Assert.equal(wrappedToken.balanceOf(user2), 2190, "Expected balance");
     }
 }

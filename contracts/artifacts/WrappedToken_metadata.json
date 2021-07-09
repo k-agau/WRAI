@@ -718,9 +718,9 @@
 				"name": "withdraw",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "bool"
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -768,7 +768,7 @@
 					}
 				},
 				"updateRedemptionPrice()": {
-					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variable \r Retrieves the current price of Rai \r*"
+					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variableUses ray to account for real oracleRelayer \r Retrieves the current price of Rai \r*"
 				},
 				"withdraw(address,uint256)": {
 					"details": "Allows users to withdraw the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. The wrapped tokens are burned with each withdrawal. \r Users exchange wrapped token for the underlying token \r",
@@ -836,10 +836,10 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0xd5b008fa232dc13a2cabc4c066955b578f00ffff59de3f9d0581fee86925c1b1",
+			"keccak256": "0x161922f44e1c07a60e4c9920d4feb85db2d99fe70fae4e79e783becf48cfe8a0",
 			"urls": [
-				"bzz-raw://193b33094b93dc3c91c87764283554083a0443a5036c22884448190df8fec16c",
-				"dweb:/ipfs/Qmb5BuW2fDpcpeLP28Yns2u2LcnM2D6awAdm9tijCsa47r"
+				"bzz-raw://1b8982a8b253466a9c664cc0a6f78361d3428dd99cdf0e55a6215a896e27a819",
+				"dweb:/ipfs/QmeQFZkmiW8WghWVf6RdM3m5tHXme2q7JjXYQXefNQDVWi"
 			]
 		}
 	},
