@@ -87,6 +87,30 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "recipient",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "doApproveUnderlying",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "src",
 						"type": "address"
 					}
@@ -355,17 +379,17 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0xbdd43f65bf008652c458d78af17b6834c48ae441dc1d8b03ba549c718e1f222f",
+			"keccak256": "0x7660ba2270d982e45b9d8c09ec7f7429d92b74249bc6bdb05ce12333f85a794a",
 			"urls": [
-				"bzz-raw://cbad9ca240d4cef4b70f5940b363114650b53c963131515a83363716489c5413",
-				"dweb:/ipfs/QmT8d81HMDHBYg3ZENn1m89hT9M4h7hnqFLG1TtEX3qT2p"
+				"bzz-raw://27f1cc9d2f73226adc827335257ec9e61772761ea689de16ee1bc5f2e9c9d15e",
+				"dweb:/ipfs/QmV34zgQVQYQ3in8JtsPkeVBAuxMAyFaqEof4J1yhqgSVt"
 			]
 		},
 		"contracts/WrappedTokenUser.sol": {
-			"keccak256": "0xe2bb26ce53979a7f894e3ec5848292dc7028f6acb1ee21bbd5e6a0b52fd085e7",
+			"keccak256": "0x2eb1d2b2bd024030c867cb77ba253fee905daceb7a3cf04d7c1e9dea183e385b",
 			"urls": [
-				"bzz-raw://74881d25e37374ff325033283c0fe7462f1081e6818d6682b7fc057faf0b3404",
-				"dweb:/ipfs/QmTRwaw4M5qTWL6i9CmPtpbVLjfoj5SW3DKQzMfZpyut7w"
+				"bzz-raw://7d59665080498ef30798f8378700adbe1c3c538ce9771586fe203b39f04aaf70",
+				"dweb:/ipfs/QmYRbwURTcu4UZa36urqWqY86hJwBTkGgNkaeBADwTFXVz"
 			]
 		}
 	},

@@ -121,7 +121,6 @@ contract WrappedToken {
         chainId             = chainId_;
 	    underlyingToken     = underlyingToken_;
 	    oracleRelayer       = oracleRelayer_;
-        authorizedAccounts[address(underlyingToken)] = 1;
         DOMAIN_SEPARATOR    = keccak256(abi.encode(
             keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
             keccak256(bytes(name)),
@@ -210,11 +209,13 @@ contract WrappedToken {
     **/
     function withdraw(address src, uint wrappedAmount) public returns (bool) {
         require(src == msg.sender);
+        require(balanceOf(src) >= wrappedAmount);
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
+        require(underlyingToken.balanceOf(address(this)) >= underlyingAmount, "Insufficient amount of underlying");
         _burn(src, underlyingAmount);
-        underlyingToken.approve(address(underlyingToken), underlyingAmount);
+        underlyingToken.approve(src, underlyingAmount);
         underlyingToken.transferFrom(address(this), msg.sender, underlyingAmount);
-        
+        underlyingToken.approve(src, 0);
         emit Withdraw(src, underlyingAmount);
         
         return true;

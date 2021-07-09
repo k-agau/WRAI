@@ -1,4 +1,6 @@
+pragma solidity 0.6.7;
 import "contracts/WrappedToken.sol";
+import "contracts/Coin.sol";
 
 contract WrappedTokenUser {
     WrappedToken   token;
@@ -54,6 +56,14 @@ contract WrappedTokenUser {
         returns (bool)
     {
         return token.approve(recipient, amount);
+    }
+    
+    function doApproveUnderlying(address recipient, uint amount)
+        public
+        returns (bool)
+    {
+        Coin tmp = token.underlyingToken();
+        return tmp.approve(recipient, amount);
     }
 
     function doAllowance(address owner, address spender)
