@@ -346,13 +346,16 @@ contract WrappedTokenTest is DSTest {
     function testWithdraw() public {
         underlyingToken.mint(address(wrappedToken), 10000000);
         wrappedToken.mint(address(wrappedToken), 1000000);
-        Assert.equal(wrappedToken.balanceOf(user1), 1000, "Init wrapped balance 0");
-        Assert.equal(underlyingToken.balanceOf(user1), 0, "Init underlying balance 0");
+        wrappedToken.mint(user3, 1000);
+        underlyingToken.mint(user3, 1000);
+        Assert.equal(wrappedToken.balanceOf(user3), 1000, "Init wrapped balance is 1000");
+        Assert.equal(underlyingToken.balanceOf(user3), 1000, "Init underlying balance 0");
         uint prevTotalSupply = wrappedToken.totalSupply();
-        WrappedTokenUser(user1).doWithdraw(user1, 500);
-        //Assert.equal(wrappedToken.balanceOf(user1), 0, "Init wrapped balance 0");
-        //Assert.equal(wrappedToken.totalSupply(), prevTotalSupply - 1000, "New total supply");
-        //Assert.equal(underlyingToken.balanceOf(user1), wrappedToken.convertToUnderlyingAmount(1000), "New underlying balance");
+        WrappedTokenUser(user3).doWithdraw(user3, 300);
+        
+        Assert.equal(wrappedToken.balanceOf(user3), 0, "Init wrapped balance 0");
+        Assert.equal(wrappedToken.totalSupply(), prevTotalSupply - 300, "New total supply");
+        Assert.equal(underlyingToken.balanceOf(user3), wrappedToken.convertToUnderlyingAmount(300), "New underlying balance");
         
         
     }

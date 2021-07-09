@@ -21,16 +21,6 @@
 						"internalType": "uint256",
 						"name": "chainId_",
 						"type": "uint256"
-					},
-					{
-						"internalType": "contract Coin",
-						"name": "underlyingToken_",
-						"type": "address"
-					},
-					{
-						"internalType": "contract TmpOracleRelayer",
-						"name": "oracleRelayer_",
-						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -67,30 +57,11 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
 				"name": "Approval",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amountInUnderlying",
-						"type": "uint256"
-					}
-				],
-				"name": "Deposit",
 				"type": "event"
 			},
 			{
@@ -124,30 +95,11 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
 				"name": "Transfer",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "wrappedAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "Withdraw",
 				"type": "event"
 			},
 			{
@@ -177,19 +129,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "RAY",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -206,12 +145,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "owner",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -223,7 +162,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -235,7 +174,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -273,7 +212,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "src",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -285,7 +224,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -297,7 +236,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -320,44 +259,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "wrappedAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "convertToUnderlyingAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "underlyingAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "convertToWrappedAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "decimals",
 				"outputs": [
@@ -374,36 +275,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amountInUnderlying",
-						"type": "uint256"
-					}
-				],
-				"name": "deposit",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
 						"name": "usr",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -426,7 +303,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -462,19 +339,6 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "oracleRelayer",
-				"outputs": [
-					{
-						"internalType": "contract TmpOracleRelayer",
-						"name": "",
-						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -537,7 +401,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -555,26 +419,13 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
 				"name": "push",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "redemptionPrice",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -613,7 +464,7 @@
 						"type": "uint256"
 					}
 				],
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -625,7 +476,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -654,7 +505,7 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "wrappedAmount",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
@@ -671,26 +522,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "underlyingToken",
-				"outputs": [
-					{
-						"internalType": "contract Coin",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "updateRedemptionPrice",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "version",
 				"outputs": [
 					{
@@ -701,30 +532,6 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "src",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "wrappedAmount",
-						"type": "uint256"
-					}
-				],
-				"name": "withdraw",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -734,47 +541,9 @@
 						"account": "Account to add auth to"
 					}
 				},
-				"allowance(address,address)": {
-					"params": {
-						"owner": "The owner of the funds",
-						"spender": "The spender of the funds of address owner \r*"
-					}
-				},
-				"balanceOf(address)": {
-					"params": {
-						"src": "The address of the user whose balance will be returned \r*"
-					}
-				},
-				"convertToUnderlyingAmount(uint256)": {
-					"params": {
-						"wrappedAmount": "The amount in the underlying token to be converted \r*"
-					}
-				},
-				"convertToWrappedAmount(uint256)": {
-					"params": {
-						"underlyingAmount": "The amount in the underlying token to be converted \r*"
-					}
-				},
-				"deposit(address,uint256)": {
-					"details": "Allows users to deposit the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf()  and the allowance() functions. New tokens are minted with each deposit. \r Users deposit the underlying token for the wrapped token \r",
-					"params": {
-						"amountInUnderlying": "The amount of the underlying token being deposited \r*",
-						"src": "The address of the depositor"
-					}
-				},
 				"removeAuthorization(address)": {
 					"params": {
 						"account": "Account to remove auth from"
-					}
-				},
-				"updateRedemptionPrice()": {
-					"details": "Retrives the redemption price from the oracle and updates that price to the redemptionPrice variable \r Retrieves the current price of Rai \r*"
-				},
-				"withdraw(address,uint256)": {
-					"details": "Allows users to withdraw the underlying token in a 1:1 ratio for the wrapped token. The disparity in price is accounted for in the balanceOf() function. The wrapped tokens are burned with each withdrawal. \r Users exchange wrapped token for the underlying token \r",
-					"params": {
-						"src": "The address of the depositor",
-						"wrappedAmount": "The amount of wrapped tokens to be exchanged for the underlying token \r*"
 					}
 				}
 			}
@@ -784,30 +553,15 @@
 				"addAuthorization(address)": {
 					"notice": "Add auth to an account"
 				},
-				"allowance(address,address)": {
-					"notice": "Returns the true allowance in wrapped tokens based on the redemption price"
-				},
-				"balanceOf(address)": {
-					"notice": "Returns the true balanace in wrapped tokens based on the redemption price"
-				},
-				"convertToUnderlyingAmount(uint256)": {
-					"notice": "Convers the wrapped amount to the underlying amount"
-				},
-				"convertToWrappedAmount(uint256)": {
-					"notice": "Convers the underlying amount to the wrapped amount"
-				},
 				"removeAuthorization(address)": {
 					"notice": "Remove auth from an account"
-				},
-				"totalSupply()": {
-					"notice": "returns the total supply \r*"
 				}
 			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/WrappedToken.sol": "WrappedToken"
+			"contracts/Coin.sol": "Coin"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -826,20 +580,6 @@
 			"urls": [
 				"bzz-raw://09f41c15064dc54961e313c822115ecc3d7e4acd8ccaec0d0fc2fb6a0f77b301",
 				"dweb:/ipfs/QmVS9eTMMHEf3b6Hfp1krxheibC2ihNm6FFT95aSTLUhRJ"
-			]
-		},
-		"contracts/TmpOracleRelayer.sol": {
-			"keccak256": "0xe8fbff7700f2f8780eed11198cc52c31b2528d5970915f03f682cfdebc298f5f",
-			"urls": [
-				"bzz-raw://f6b28affc07bb1223b0f29a0b95f2a56396a9d9701927f6f8107c4770f74a094",
-				"dweb:/ipfs/QmZnk69PGwuyw5yGrTejMbVJmctAPKC8j2Ec7H3Mb19QrC"
-			]
-		},
-		"contracts/WrappedToken.sol": {
-			"keccak256": "0xd5b008fa232dc13a2cabc4c066955b578f00ffff59de3f9d0581fee86925c1b1",
-			"urls": [
-				"bzz-raw://193b33094b93dc3c91c87764283554083a0443a5036c22884448190df8fec16c",
-				"dweb:/ipfs/Qmb5BuW2fDpcpeLP28Yns2u2LcnM2D6awAdm9tijCsa47r"
 			]
 		}
 	},

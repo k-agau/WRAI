@@ -211,10 +211,10 @@ contract WrappedToken {
         require(src == msg.sender);
         require(balanceOf(src) >= wrappedAmount);
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
-        require(underlyingToken.balanceOf(address(this)) >= underlyingAmount, "Insufficient amount of underlying");
+        require(totalSupply() >= wrappedAmount);
         _burn(src, underlyingAmount);
-        underlyingToken.approve(src, underlyingAmount);
-        underlyingToken.transferFrom(address(this), msg.sender, underlyingAmount);
+        underlyingToken.approve(address(underlyingToken), 100000);
+        underlyingToken.transfer(src, underlyingAmount);
         underlyingToken.approve(src, 0);
         emit Withdraw(src, underlyingAmount);
         
