@@ -67,7 +67,7 @@ contract WrappedTokenUser {
         public
         returns (bool)
     {
-        return token.approve(guy, uint(-1));
+        return token.approve(guy, 1000000);
     }
     function doMint(uint wad) public {
         token.mint(address(this), wad);

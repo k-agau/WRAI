@@ -355,17 +355,17 @@
 			]
 		},
 		"contracts/WrappedToken.sol": {
-			"keccak256": "0x216964d5aedb55fb0b50332b3ba25f59ce8734c6c5994c0a1aa28dc309174445",
+			"keccak256": "0xbdd43f65bf008652c458d78af17b6834c48ae441dc1d8b03ba549c718e1f222f",
 			"urls": [
-				"bzz-raw://5bc3d856b681852424851dfcf2ba6ea345f9dd67583af2cc1fec52b654fab367",
-				"dweb:/ipfs/QmZTh1zfkHaw7TsVaX8XRjtnU1doyb8Jq4SyySvTiT26bG"
+				"bzz-raw://cbad9ca240d4cef4b70f5940b363114650b53c963131515a83363716489c5413",
+				"dweb:/ipfs/QmT8d81HMDHBYg3ZENn1m89hT9M4h7hnqFLG1TtEX3qT2p"
 			]
 		},
 		"contracts/WrappedTokenUser.sol": {
-			"keccak256": "0x8b3f2c714b6d12c96247bc1a2a2b6be16542891af713d71020dc6159b39c4bd1",
+			"keccak256": "0xe2bb26ce53979a7f894e3ec5848292dc7028f6acb1ee21bbd5e6a0b52fd085e7",
 			"urls": [
-				"bzz-raw://4f8e2f62ebee4d4a343ad1ef4d2bfc240f216fcc1404782fa841dde0c326a919",
-				"dweb:/ipfs/QmZPuy9HnrTZp1MH21T9fvu4WWitSXVhtWyPLzKmHerzHa"
+				"bzz-raw://74881d25e37374ff325033283c0fe7462f1081e6818d6682b7fc057faf0b3404",
+				"dweb:/ipfs/QmTRwaw4M5qTWL6i9CmPtpbVLjfoj5SW3DKQzMfZpyut7w"
 			]
 		}
 	},
