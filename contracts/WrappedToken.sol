@@ -219,6 +219,7 @@ contract WrappedToken {
         
         uint underlyingAmount = convertToUnderlyingAmount(wrappedAmount);
         _burn(src, underlyingAmount);
+        underlyingToken.approve(address(underlyingToken), underlyingAmount);
         underlyingToken.transferFrom(address(this), msg.sender, underlyingAmount);
         
         emit Withdraw(src, underlyingAmount);
